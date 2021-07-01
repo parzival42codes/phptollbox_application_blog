@@ -1,0 +1,16 @@
+{
+  "type": "install.menu",
+  "content": {
+    "link": "index.php?application=ApplicationBlog",
+    "menuClassMain": "ApplicationBlog",
+    "menuIcon": "",
+    "language": {
+      "de_DE": {
+        "menuTitle": "1|Blog",
+        "menuDescription": "",
+        "menuPath": "/Blog",
+        "menuAccess": "ApplicationBlog"
+      }
+    }
+  }
+}
