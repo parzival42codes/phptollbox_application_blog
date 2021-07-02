@@ -1,65 +1,52 @@
 <?php
 
+/**
+ * Class ApplicationBlog_crud
+ *
+ * @database dataVariableCreated
+ * @database dataVariableEdited
+ * @database dataVariableDeleted
+ *
+ */
 class ApplicationBlog_crud extends Base_abstract_crud
 {
 
-    protected static string $table   = 'custom_dreamptrip';
-    protected static string $tableId = 'crudIdent';
+    protected static string $table   = 'custom_blog';
+    protected static string $tableId = 'crudId';
 
     /**
-     * @var string $crudIdent
-     * @database type varchar;250
+     * @var int|null
+     * @database type int;11
      * @database isPrimary
-     *
+     * @database default ContainerFactoryDatabaseEngineMysqlTable::DEFAULT_AUTO_INCREMENT
      */
-    protected string $crudIdent = '';
-    /**
-     * @var string
-     * @database type varchar;250
-     */
-    protected string $crudPath = '';
+    private  ?int $crudId = null;
     /**
      * @var string
      * @database type text
      */
-    protected string $crudData = '';
-    /**
-     * @var string
-     * @database type text
-     */
-    protected string $crudText = '';
-
+    private string $crudText = '';
 
     /**
-     * @return string
+     * @var int
+     * @database type int;11
      */
-    public function getCrudIdent(): string
+    protected int $crudView = 0;
+
+    /**
+     * @return int|null
+     */
+    public function getCrudId(): ?int
     {
-        return $this->crudIdent;
+        return $this->crudId;
     }
 
     /**
-     * @param string $crudIdent
+     * @param int|null $crudId
      */
-    public function setCrudIdent(string $crudIdent): void
+    public function setCrudId(?int $crudId): void
     {
-        $this->crudIdent = $crudIdent;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCrudData(): string
-    {
-        return $this->crudData;
-    }
-
-    /**
-     * @param string $crudData
-     */
-    public function setCrudData(string $crudData): void
-    {
-        $this->crudData = $crudData;
+        $this->crudId = $crudId;
     }
 
     /**
@@ -79,20 +66,19 @@ class ApplicationBlog_crud extends Base_abstract_crud
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCrudPath(): string
+    public function getCrudView(): int
     {
-        return $this->crudPath;
+        return $this->crudView;
     }
 
     /**
-     * @param string $crudPath
+     * @param int $crudView
      */
-    public function setCrudPath(string $crudPath): void
+    public function setCrudView(int $crudView): void
     {
-        $this->crudPath = $crudPath;
+        $this->crudView = $crudView;
     }
-
 
 }

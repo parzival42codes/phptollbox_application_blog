@@ -41,7 +41,7 @@ description="Blog"
     public function getDependencies(): array
     {
         return [
-            'Blog',
+            'ApplicationBlog',
         ];
     }
 
