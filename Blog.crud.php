@@ -20,12 +20,12 @@ class ApplicationBlog_crud extends Base_abstract_crud
      * @database isPrimary
      * @database default ContainerFactoryDatabaseEngineMysqlTable::DEFAULT_AUTO_INCREMENT
      */
-    private  ?int $crudId = null;
+    protected  ?int $crudId = null;
     /**
      * @var string
      * @database type text
      */
-    private string $crudText = '';
+    protected string $crudText = '';
 
     /**
      * @var int
