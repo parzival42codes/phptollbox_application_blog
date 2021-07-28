@@ -25,48 +25,48 @@ class ApplicationBlog_app extends Application_abstract
 
         $crud = new ApplicationBlog_crud();
 
-        $filter =new ContainerExtensionTemplateParseCreateFilterHelper(
-                                 'user');
-
-        $filter->addFilter('dataVariableCreatedFrom',
-                           null,
-                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/date/from',
-                                                         [
-                                                             'de_DE' => 'Datum von',
-                                                             'en_US' => 'Date from',
-                                                         ]),
-                           'input');
-
-        $filter->addFilter('dataVariableCreatedTo',
-                           null,
-                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/date/to',
-                                                         [
-                                                             'de_DE' => 'Datum bis',
-                                                             'en_US' => 'Date to',
-                                                         ]),
-                           'input');
-
-        $filter->addFilter('dataVariableTags',
-                           null,
-                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/tags',
-                                                         [
-                                                             'de_DE' => 'Tags',
-                                                             'en_US' => 'Tags',
-                                                         ]),
-                           'input');
-
-        $filterValues = $filter->getFilterValues();
+//        $filter = new ContainerExtensionTemplateParseCreateFilterHelper('blog');
+//
+//        $filter->addFilter('dataVariableCreatedFrom',
+//                           null,
+//                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/date/from',
+//                                                         [
+//                                                             'de_DE' => 'Datum von',
+//                                                             'en_US' => 'Date from',
+//                                                         ]),
+//                           'date');
+//
+//        $filter->addFilter('dataVariableCreatedTo',
+//                           null,
+//                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/date/to',
+//                                                         [
+//                                                             'de_DE' => 'Datum bis',
+//                                                             'en_US' => 'Date to',
+//                                                         ]),
+//                           'date');
+//
+//        $filter->addFilter('dataVariableTags',
+//                           null,
+//                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/tags',
+//                                                         [
+//                                                             'de_DE' => 'Tags',
+//                                                             'en_US' => 'Tags',
+//                                                         ]),
+//                           'input');
+//
+//        $filter->create();
+//        $filterValues = $filter->getFilterValues();
 
         $filterCrud = [];
-        if (isset($filterValues['dataVariableCreatedFrom']) && $filterValues['dataVariableCreatedFrom'] !== '') {
-            $filterCrud['dataVariableCreatedFrom'] = $filterValues['dataVariableCreatedFrom'];
-        }
-        if (isset($filterValues['dataVariableCreatedTo']) && $filterValues['dataVariableCreatedTo'] !== '') {
-            $filterCrud['dataVariableCreatedTo'] = $filterValues['dataVariableCreatedTo'];
-        }
-        if (isset($filterValues['dataVariableTags']) && $filterValues['dataVariableTags'] !== '') {
-            $filterCrud['dataVariableTags'] = $filterValues['dataVariableTags'];
-        }
+//        if (isset($filterValues['dataVariableCreatedFrom']) && $filterValues['dataVariableCreatedFrom'] !== '') {
+//            $filterCrud['dataVariableCreatedFrom'] = $filterValues['dataVariableCreatedFrom'];
+//        }
+//        if (isset($filterValues['dataVariableCreatedTo']) && $filterValues['dataVariableCreatedTo'] !== '') {
+//            $filterCrud['dataVariableCreatedTo'] = $filterValues['dataVariableCreatedTo'];
+//        }
+//        if (isset($filterValues['dataVariableTags']) && $filterValues['dataVariableTags'] !== '') {
+//            $filterCrud['dataVariableTags'] = $filterValues['dataVariableTags'];
+//        }
 
         $count = $crud->count($filterCrud);
 
@@ -78,28 +78,59 @@ class ApplicationBlog_app extends Application_abstract
 
         $crudImports = $crud->find($filterCrud,
                                    [],
-                                   [],
+                                   [
+                                       'dataVariableCreated DESC'
+                                   ],
                                    $pagination->getPagesView(),
                                    $pagination->getPageOffset());
 
-        $tableTcs = [];
+        $entriesContent = '';
 
-        d($crudImports);
-        eol();
+        /** @var ApplicationBlog_crud $crudItem */
+        foreach ($crudImports as $crudItem) {
+            $crudItemDate = new DateTime($crudItem->getDataVariableCreated());
 
-        /** @var ContainerFactoryUser_crud $crudImport */
-        foreach ($crudImports as $crudImport) {
+            $templateEntry = new ContainerExtensionTemplate();
+            $templateEntry->set($templateCache->getCacheContent()['item']);
+            $templateEntry->assign('title',
+                                   $crudItem->getCrudTitle());
+            $templateEntry->assign('date',
+                                   $crudItemDate->format((string)Config::get('/environment/datetime/format')));
+            $templateEntry->assign('content',
+                                   $crudItem->getCrudText());
+            $templateEntry->parse();
 
+            $entriesContent .= $templateEntry->get();
 
         }
 
-        $template->assign('Table_Table',
-                          $tableTcs);
+        $this->createMenu();
 
-        $template->parse();
+        $template->assign('entries',
+                          $entriesContent);
 
         $template->parse();
         return $template->get();
+    }
+
+    private function createMenu()
+    {
+        $menuObj = new ContainerFactoryMenu();
+
+        $query = new ContainerFactoryDatabaseQuery(__METHOD__ . '#select',
+                                                   true,
+                                                   ContainerFactoryDatabaseQuery::MODE_SELECT);
+        $query->setTable('custom_blog');
+        $query->groupBy('dataVariableCreated');
+
+        $query->construct();
+        $smtp = $query->execute();
+
+        while ($item = $smtp->fetch()) {
+          d($item);
+        }
+
+        eol();
     }
 
     private function pageData(): void
@@ -108,7 +139,7 @@ class ApplicationBlog_app extends Application_abstract
 
         /** @var ContainerIndexPage $page */
         $container = Container::DIC();
-        $page = $container->getDIC('/Page');
+        $page      = $container->getDIC('/Page');
 
         $page->setPageTitle(ContainerFactoryLanguage::get('/' . $className . '/meta/title'));
         $page->setPageDescription(ContainerFactoryLanguage::get('/' . $className . '/meta/description'));

@@ -20,7 +20,12 @@ class ApplicationBlog_crud extends Base_abstract_crud
      * @database isPrimary
      * @database default ContainerFactoryDatabaseEngineMysqlTable::DEFAULT_AUTO_INCREMENT
      */
-    protected  ?int $crudId = null;
+    protected ?int $crudId = null;
+    /**
+     * @var string
+     * @database type varchar;200
+     */
+    protected string $crudTitle = '';
     /**
      * @var string
      * @database type text
@@ -79,6 +84,22 @@ class ApplicationBlog_crud extends Base_abstract_crud
     public function setCrudView(int $crudView): void
     {
         $this->crudView = $crudView;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCrudTitle(): string
+    {
+        return $this->crudTitle;
+    }
+
+    /**
+     * @param string $crudTitle
+     */
+    public function setCrudTitle(string $crudTitle): void
+    {
+        $this->crudTitle = $crudTitle;
     }
 
 }
