@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /**
- * Dreamtrip
+ * Blog
  *
  * @author   Stefan Schlombs
  * @version  1.0.0
@@ -25,48 +25,7 @@ class ApplicationBlog_app extends Application_abstract
 
         $crud = new ApplicationBlog_crud();
 
-//        $filter = new ContainerExtensionTemplateParseCreateFilterHelper('blog');
-//
-//        $filter->addFilter('dataVariableCreatedFrom',
-//                           null,
-//                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/date/from',
-//                                                         [
-//                                                             'de_DE' => 'Datum von',
-//                                                             'en_US' => 'Date from',
-//                                                         ]),
-//                           'date');
-//
-//        $filter->addFilter('dataVariableCreatedTo',
-//                           null,
-//                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/date/to',
-//                                                         [
-//                                                             'de_DE' => 'Datum bis',
-//                                                             'en_US' => 'Date to',
-//                                                         ]),
-//                           'date');
-//
-//        $filter->addFilter('dataVariableTags',
-//                           null,
-//                           ContainerFactoryLanguage::get('/ApplicationAdministrationUser/filter/tags',
-//                                                         [
-//                                                             'de_DE' => 'Tags',
-//                                                             'en_US' => 'Tags',
-//                                                         ]),
-//                           'input');
-//
-//        $filter->create();
-//        $filterValues = $filter->getFilterValues();
-
         $filterCrud = [];
-//        if (isset($filterValues['dataVariableCreatedFrom']) && $filterValues['dataVariableCreatedFrom'] !== '') {
-//            $filterCrud['dataVariableCreatedFrom'] = $filterValues['dataVariableCreatedFrom'];
-//        }
-//        if (isset($filterValues['dataVariableCreatedTo']) && $filterValues['dataVariableCreatedTo'] !== '') {
-//            $filterCrud['dataVariableCreatedTo'] = $filterValues['dataVariableCreatedTo'];
-//        }
-//        if (isset($filterValues['dataVariableTags']) && $filterValues['dataVariableTags'] !== '') {
-//            $filterCrud['dataVariableTags'] = $filterValues['dataVariableTags'];
-//        }
 
         $count = $crud->count($filterCrud);
 
@@ -102,12 +61,12 @@ class ApplicationBlog_app extends Application_abstract
 
             $entriesContent .= $templateEntry->get();
 
-        }
-
-        $this->createMenu();
+        };
 
         $template->assign('entries',
                           $entriesContent);
+        $template->assign('menu',
+                          $this->createMenu());
 
         $template->parse();
         return $template->get();
@@ -115,22 +74,64 @@ class ApplicationBlog_app extends Application_abstract
 
     private function createMenu()
     {
+        $user = Container::getInstance('ContainerFactoryUser');
+
         $menuObj = new ContainerFactoryMenu();
+        $menuObj->setMenuAccessList($user->getUserAccess());
 
         $query = new ContainerFactoryDatabaseQuery(__METHOD__ . '#select',
                                                    true,
                                                    ContainerFactoryDatabaseQuery::MODE_SELECT);
+        $query->selectFunction('DATE(dataVariableCreated) as createdDate');
         $query->setTable('custom_blog');
-        $query->groupBy('dataVariableCreated');
+        $query->groupBy('DATE(dataVariableCreated)',
+                        false);
 
         $query->construct();
         $smtp = $query->execute();
 
+        $dateCollect             = [];
+        $dateCollectCounterYear  = [];
+        $dateCollectCounterMonth = [];
+
         while ($item = $smtp->fetch()) {
-          d($item);
+            $dateTime = new DateTime($item['createdDate']);
+
+            if (isset($dateCollectCounterYear[$dateTime->format('Y')])) {
+                $dateCollectCounterYear[$dateTime->format('Y')] += 1;
+            }
+            else {
+                $dateCollectCounterYear[$dateTime->format('Y')] = 1;
+            }
+
+            if (isset($dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')])) {
+                $dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')] += 1;
+            }
+            else {
+                $dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')] = 1;
+            }
+
+            $dateCollect[$dateTime->format('Y')][$dateTime->format('m')] = $dateTime->getTimestamp();
+
         }
 
-        eol();
+        foreach ($dateCollect as $dateItemYear => $dateItemMonthData) {
+            foreach ($dateItemMonthData as $dateItemMonth => $dateItemMonthItem) {
+                $path  = '/' . $dateItemYear . ' (' . ($dateCollectCounterYear[$dateItemYear] ?? 0) . ')';
+                $title = strftime("%B",
+                                  $dateItemMonthItem) . ' (' . $dateCollectCounterMonth[$dateItemYear][$dateItemMonth] . ')';
+
+                $menuItem = new ContainerFactoryMenuItem();
+                $menuItem->setPath($path);
+                $menuItem->setTitle($title);
+                $menuItem->setLink('index.php?application=ApplicationBlog');
+                $menuItem->setAccess('ApplicationBlog');
+
+                $menuObj->addMenuItem($menuItem);
+            }
+        }
+
+        return $menuObj->createMenu();
     }
 
     private function pageData(): void
