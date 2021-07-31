@@ -9,6 +9,8 @@ class ApplicationBlog_install extends ContainerFactoryModulInstall_abstract
     {
         $this->importMetaFromModul('_app');
         $this->importQueryDatabaseFromCrud('ApplicationBlog_crud');
+        $this->importQueryDatabaseFromCrud('ApplicationBlog_crud_category');
+        $this->importQueryDatabaseFromCrud('ApplicationBlog_crud_category_link');
     }
 
     public function uninstall(): void

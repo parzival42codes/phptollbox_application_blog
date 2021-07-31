@@ -74,6 +74,9 @@ class ApplicationBlog_app extends Application_abstract
 
     private function createMenu()
     {
+        $dateName     = ContainerFactoryLanguage::get('/ApplicationBlog/date');
+        $categoryName = ContainerFactoryLanguage::get('/ApplicationBlog/category');
+
         $user = Container::getInstance('ContainerFactoryUser');
 
         $menuObj = new ContainerFactoryMenu();
@@ -117,7 +120,7 @@ class ApplicationBlog_app extends Application_abstract
 
         foreach ($dateCollect as $dateItemYear => $dateItemMonthData) {
             foreach ($dateItemMonthData as $dateItemMonth => $dateItemMonthItem) {
-                $path  = '/' . $dateItemYear . ' (' . ($dateCollectCounterYear[$dateItemYear] ?? 0) . ')';
+                $path  = '/' . $dateName . '/' . $dateItemYear . ' (' . ($dateCollectCounterYear[$dateItemYear] ?? 0) . ')';
                 $title = strftime("%B",
                                   $dateItemMonthItem) . ' (' . $dateCollectCounterMonth[$dateItemYear][$dateItemMonth] . ')';
 
@@ -130,6 +133,25 @@ class ApplicationBlog_app extends Application_abstract
                 $menuObj->addMenuItem($menuItem);
             }
         }
+
+        $crudCategory     = new ApplicationBlog_crud_category();
+        $crudCategoryFind = $crudCategory->find([
+                                                    'crudLanguage' => (string)Config::get('/environment/language')
+                                                ]);
+
+        /** @var ApplicationBlog_crud_category $crudCategoryFindItem */
+        foreach ($crudCategoryFind as $crudCategoryFindItem) {
+            $menuItem = new ContainerFactoryMenuItem();
+            $menuItem->setPath('/' . $categoryName . '/' . $crudCategoryFindItem->getCrudPath());
+            $menuItem->setTitle($crudCategoryFindItem->getCrudTitle());
+            $menuItem->setLink('index.php?application=ApplicationBlog');
+            $menuItem->setAccess('ApplicationBlog');
+
+            $menuObj->addMenuItem($menuItem);
+        }
+
+//        d($crudCategoryFind);
+//        eol();
 
         return $menuObj->createMenu();
     }

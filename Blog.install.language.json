@@ -1,17 +1,25 @@
 {
-    "type": "install.language",
-    "content": {
-        "/meta/title": {
-            "de_DE": "Blog",
-            "en_US": "Blog"
-        },
-        "/meta/description": {
-            "de_DE": "Blog",
-            "en_US": "Blog"
-        },
-        "/breadcrumb": {
-            "de_DE": "Blog",
-            "en_US": "Blog"
-        }
+  "type": "install.language",
+  "content": {
+    "/meta/title": {
+      "de_DE": "Blog",
+      "en_US": "Blog"
+    },
+    "/meta/description": {
+      "de_DE": "Blog",
+      "en_US": "Blog"
+    },
+    "/breadcrumb": {
+      "de_DE": "Blog",
+      "en_US": "Blog"
+    },
+    "/date": {
+      "de_DE": "Datum",
+      "en_US": "Date"
+    },
+    "/category": {
+      "de_DE": "Kategorien",
+      "en_US": "Category"
     }
+  }
 }
