@@ -7,6 +7,7 @@
  * @version  1.0.0
  * @modul    versionRequiredSystem 1.0.0
  * @modul    groupAccess 1,2,3,4
+ * @modul    hasSearch
  * @modul    language_path_de_DE Blog
  * @modul    language_name_de_DE Blog
  * @modul    language_path_en_US Blog
@@ -16,6 +17,8 @@ class ApplicationBlog_app extends Application_abstract
 {
     public function setContent(): string
     {
+        $this->pageData();
+
         $templateCache = new ContainerExtensionTemplateLoad_cache_template(Core::getRootClass(__CLASS__),
                                                                            'default,item');
 
@@ -158,11 +161,10 @@ class ApplicationBlog_app extends Application_abstract
 
     private function pageData(): void
     {
-        $className = $this->___getRootClass();
+        $className = Core::getRootClass(__CLASS__);
 
         /** @var ContainerIndexPage $page */
-        $container = Container::DIC();
-        $page      = $container->getDIC('/Page');
+        $page = Container::getInstance('ContainerIndexPage');
 
         $page->setPageTitle(ContainerFactoryLanguage::get('/' . $className . '/meta/title'));
         $page->setPageDescription(ContainerFactoryLanguage::get('/' . $className . '/meta/description'));
