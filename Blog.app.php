@@ -28,7 +28,24 @@ class ApplicationBlog_app extends Application_abstract
 
         $crud = new ApplicationBlog_crud();
 
+        $container = Container::DIC();
+        /** @var ContainerFactoryRouter $router */
+        $router = $container->getDIC('/Router');
+
+        d($router);
+
         $filterCrud = [];
+
+        if ($router->getRoute() === 'filtercategory') {
+            $filterCrud = [
+                'custom_blog_category_link.crudCategoryId' => $router->getParameter('category')
+            ];
+        }
+        elseif ($router->getRoute() === 'filterdate') {
+            $filterCrud = [
+                'dataVariableCreated' => $router->getParameter('year') . '-' . $router->getParameter('month') . '%',
+            ];
+        }
 
         $count = $crud->count($filterCrud);
 
@@ -66,16 +83,34 @@ class ApplicationBlog_app extends Application_abstract
 
         };
 
+        if ($router->getRoute() === 'filtercategory') {
+            $categoryName = ContainerFactoryLanguage::get('/ApplicationBlog/category');
+
+            $template->assign('menu',
+                              $this->createMenu('/' . $categoryName . '/' . $crudItem->getAdditionalQuerySelect('custom_blog_category_crudPath'),
+                                                $crudItem->getAdditionalQuerySelect('custom_blog_category_crudTitle')));
+        }
+        elseif ($router->getRoute() === 'filterdate') {
+//             . '-' . $router->getParameter('month')
+
+               $date = new DateTime($crudItem->getDataVariableCreated());
+
+//               $title = strftime("%B",
+//                                 $date->getTimestamp()) . ' (' . $dateCollectCounterMonth[$dateItemYear][$dateItemMonth] . ')';
+
+            $template->assign('menu',
+                              $this->createMenu($router->getParameter('year')),$title);
+        }
+
         $template->assign('entries',
                           $entriesContent);
-        $template->assign('menu',
-                          $this->createMenu());
+
 
         $template->parse();
         return $template->get();
     }
 
-    private function createMenu()
+    private function createMenu(string $routerPath = '', string $routerTitle = '')
     {
         $dateName     = ContainerFactoryLanguage::get('/ApplicationBlog/date');
         $categoryName = ContainerFactoryLanguage::get('/ApplicationBlog/category');
@@ -130,7 +165,7 @@ class ApplicationBlog_app extends Application_abstract
                 $menuItem = new ContainerFactoryMenuItem();
                 $menuItem->setPath($path);
                 $menuItem->setTitle($title);
-                $menuItem->setLink('index.php?application=ApplicationBlog');
+                $menuItem->setLink('index.php?application=ApplicationBlog&route=filterdate&year=' . $dateItemYear . '&month=' . $dateItemMonth);
                 $menuItem->setAccess('ApplicationBlog');
 
                 $menuObj->addMenuItem($menuItem);
@@ -147,16 +182,18 @@ class ApplicationBlog_app extends Application_abstract
             $menuItem = new ContainerFactoryMenuItem();
             $menuItem->setPath('/' . $categoryName . '/' . $crudCategoryFindItem->getCrudPath());
             $menuItem->setTitle($crudCategoryFindItem->getCrudTitle());
-            $menuItem->setLink('index.php?application=ApplicationBlog');
+            $menuItem->setLink('index.php?application=ApplicationBlog&route=filtercategory&category=' . $crudCategoryFindItem->getCrudId());
             $menuItem->setAccess('ApplicationBlog');
 
             $menuObj->addMenuItem($menuItem);
         }
 
-//        d($crudCategoryFind);
+//        d($routerPath);
+//        d($routerTitle);
 //        eol();
 
-        return $menuObj->createMenu();
+        return $menuObj->createMenu($routerPath,
+                                    $routerTitle);
     }
 
     private function pageData(): void

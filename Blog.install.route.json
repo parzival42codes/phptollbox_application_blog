@@ -4,5 +4,12 @@
             "path": "/blog"
         }
     },
-    "regex": []
+    "regex": {
+        "filtercategory": {
+            "path": "/blog/category/{category|[0-9a-zA-Z]+}"
+        },
+        "filterdate": {
+            "path": "/blog/date/{month|[0-9]+}/{year|[0-9]+}"
+        }
+    }
 }

@@ -102,4 +102,21 @@ class ApplicationBlog_crud extends Base_abstract_crud
         $this->crudTitle = $crudTitle;
     }
 
+    protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery
+    {
+        $query->join('custom_blog_category_link',
+                     [],
+                     'custom_blog_category_link.crudBlogId = ' . self::$table . '.crudId');
+
+        $query->join('custom_blog_category',
+                     [
+                         'crudPath',
+                         'crudTitle',
+                         'crudLanguage',
+                     ],
+                     'custom_blog_category_link.crudCategoryId = custom_blog_category.crudId');
+
+        return $query;
+    }
+
 }
