@@ -20,6 +20,14 @@
     "/category": {
       "de_DE": "Kategorien",
       "en_US": "Category"
+    },
+    "/form/dateFrom/label": {
+      "de_DE": "Datum von",
+      "en_US": "Date from"
+    },
+    "/form/dateTo/label": {
+      "de_DE": "Datum bis",
+      "en_US": "Date to"
     }
   }
 }

@@ -18,7 +18,7 @@ class ApplicationBlog_search extends ApplicationSearch_abstract
                                     'date');
 
         $template->assign('date',
-                          $formHelper->getElements());
+                          $formHelper->getElements(true));
 
         $template->parse();
 
