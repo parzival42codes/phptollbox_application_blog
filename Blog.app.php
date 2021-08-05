@@ -15,8 +15,13 @@
  */
 class ApplicationBlog_app extends Application_abstract
 {
+    private array $dateCollect             = [];
+    private array $dateCollectCounterYear  = [];
+    private array $dateCollectCounterMonth = [];
+
     public function setContent(): string
     {
+        $this->collectDateInfo();
         $this->pageData();
 
         $templateCache = new ContainerExtensionTemplateLoad_cache_template(Core::getRootClass(__CLASS__),
@@ -31,8 +36,6 @@ class ApplicationBlog_app extends Application_abstract
         $container = Container::DIC();
         /** @var ContainerFactoryRouter $router */
         $router = $container->getDIC('/Router');
-
-        d($router);
 
         $filterCrud = [];
 
@@ -91,15 +94,19 @@ class ApplicationBlog_app extends Application_abstract
                                                 $crudItem->getAdditionalQuerySelect('custom_blog_category_crudTitle')));
         }
         elseif ($router->getRoute() === 'filterdate') {
-//             . '-' . $router->getParameter('month')
 
-               $date = new DateTime($crudItem->getDataVariableCreated());
+            $dateName = ContainerFactoryLanguage::get('/ApplicationBlog/date');
 
-//               $title = strftime("%B",
-//                                 $date->getTimestamp()) . ' (' . $dateCollectCounterMonth[$dateItemYear][$dateItemMonth] . ')';
+            $date = new DateTime($crudItem->getDataVariableCreated());
 
+            $title = strftime("%B",
+                              $date->getTimestamp()) . ' (' . $this->dateCollectCounterMonth[$router->getParameter('year')][$router->getParameter('month')] . ')';
             $template->assign('menu',
-                              $this->createMenu($router->getParameter('year')),$title);
+                              $this->createMenu('/' . $dateName . '/' . $router->getParameter('year') . ' (' . $this->dateCollectCounterYear[$router->getParameter('year')] . ')',
+                                                $title));
+        } else {
+            $template->assign('menu',
+                              $this->createMenu());
         }
 
         $template->assign('entries',
@@ -120,47 +127,11 @@ class ApplicationBlog_app extends Application_abstract
         $menuObj = new ContainerFactoryMenu();
         $menuObj->setMenuAccessList($user->getUserAccess());
 
-        $query = new ContainerFactoryDatabaseQuery(__METHOD__ . '#select',
-                                                   true,
-                                                   ContainerFactoryDatabaseQuery::MODE_SELECT);
-        $query->selectFunction('DATE(dataVariableCreated) as createdDate');
-        $query->setTable('custom_blog');
-        $query->groupBy('DATE(dataVariableCreated)',
-                        false);
-
-        $query->construct();
-        $smtp = $query->execute();
-
-        $dateCollect             = [];
-        $dateCollectCounterYear  = [];
-        $dateCollectCounterMonth = [];
-
-        while ($item = $smtp->fetch()) {
-            $dateTime = new DateTime($item['createdDate']);
-
-            if (isset($dateCollectCounterYear[$dateTime->format('Y')])) {
-                $dateCollectCounterYear[$dateTime->format('Y')] += 1;
-            }
-            else {
-                $dateCollectCounterYear[$dateTime->format('Y')] = 1;
-            }
-
-            if (isset($dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')])) {
-                $dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')] += 1;
-            }
-            else {
-                $dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')] = 1;
-            }
-
-            $dateCollect[$dateTime->format('Y')][$dateTime->format('m')] = $dateTime->getTimestamp();
-
-        }
-
-        foreach ($dateCollect as $dateItemYear => $dateItemMonthData) {
+        foreach ($this->dateCollect as $dateItemYear => $dateItemMonthData) {
             foreach ($dateItemMonthData as $dateItemMonth => $dateItemMonthItem) {
-                $path  = '/' . $dateName . '/' . $dateItemYear . ' (' . ($dateCollectCounterYear[$dateItemYear] ?? 0) . ')';
+                $path  = '/' . $dateName . '/' . $dateItemYear . ' (' . ($this->dateCollectCounterYear[$dateItemYear] ?? 0) . ')';
                 $title = strftime("%B",
-                                  $dateItemMonthItem) . ' (' . $dateCollectCounterMonth[$dateItemYear][$dateItemMonth] . ')';
+                                  $dateItemMonthItem) . ' (' . $this->dateCollectCounterMonth[$dateItemYear][$dateItemMonth] . ')';
 
                 $menuItem = new ContainerFactoryMenuItem();
                 $menuItem->setPath($path);
@@ -190,6 +161,7 @@ class ApplicationBlog_app extends Application_abstract
 
 //        d($routerPath);
 //        d($routerTitle);
+//        d($menuObj);
 //        eol();
 
         return $menuObj->createMenu($routerPath,
@@ -220,5 +192,39 @@ class ApplicationBlog_app extends Application_abstract
 
     }
 
+    public function collectDateInfo(): void
+    {
+        $query = new ContainerFactoryDatabaseQuery(__METHOD__ . '#select',
+                                                   true,
+                                                   ContainerFactoryDatabaseQuery::MODE_SELECT);
+        $query->selectFunction('DATE(dataVariableCreated) as createdDate');
+        $query->setTable('custom_blog');
+        $query->groupBy('DATE(dataVariableCreated)',
+                        false);
+
+        $query->construct();
+        $smtp = $query->execute();
+
+        while ($item = $smtp->fetch()) {
+            $dateTime = new DateTime($item['createdDate']);
+
+            if (isset($this->dateCollectCounterYear[$dateTime->format('Y')])) {
+                $this->dateCollectCounterYear[$dateTime->format('Y')] += 1;
+            }
+            else {
+                $this->dateCollectCounterYear[$dateTime->format('Y')] = 1;
+            }
+
+            if (isset($this->dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')])) {
+                $this->dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')] += 1;
+            }
+            else {
+                $this->dateCollectCounterMonth[$dateTime->format('Y')][$dateTime->format('m')] = 1;
+            }
+
+            $this->dateCollect[$dateTime->format('Y')][$dateTime->format('m')] = $dateTime->getTimestamp();
+
+        }
+    }
 
 }
