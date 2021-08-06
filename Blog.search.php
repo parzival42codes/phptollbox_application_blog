@@ -12,10 +12,16 @@ class ApplicationBlog_search extends ApplicationSearch_abstract
         $template->set($templateCache->getCacheContent()['search']);
 
         $formHelper->addFormElement('dateFrom',
-                                    'date');
+                                    'date',
+                                    [],
+                                    [],
+                                    'ApplicationBlog');
 
         $formHelper->addFormElement('dateTo',
-                                    'date');
+                                    'date',
+                                    [],
+                                    [],
+                                    'ApplicationBlog');
 
         $template->assign('date',
                           $formHelper->getElements(true));
