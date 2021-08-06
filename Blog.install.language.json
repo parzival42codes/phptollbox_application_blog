@@ -21,6 +21,14 @@
       "de_DE": "Kategorien",
       "en_US": "Category"
     },
+    "/ellipse": {
+      "de_DE": "&hellip;",
+      "en_US": "&hellip;"
+    },
+    "/continueReading": {
+      "de_DE": "Weiterlesen",
+      "en_US": "Continue reading;"
+    },
     "/form/dateFrom/label": {
       "de_DE": "Datum von",
       "en_US": "Date from"

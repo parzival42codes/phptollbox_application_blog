@@ -1,0 +1,12 @@
+{
+  "type": "install.config",
+  "content": {
+    "/words/max": {
+      "value": "10",
+      "language": {
+        "de_DE": "Maximale Wörter in der Übersicht",
+        "en_US": "Maximal Words in Overview"
+      }
+    }
+  }
+}

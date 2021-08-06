@@ -72,6 +72,19 @@ class ApplicationBlog_app extends Application_abstract
         foreach ($crudImports as $crudItem) {
             $crudItemDate = new DateTime($crudItem->getDataVariableCreated());
 
+            $blogText = $crudItem->getCrudText();
+
+            if (str_word_count($blogText) > (int)Config::get('/ApplicationBlog/words/max')) {
+                $blogTextExplode = explode(' ',
+                                           $blogText,
+                    ((int)Config::get('/ApplicationBlog/words/max') + 1));
+                array_pop($blogTextExplode);
+
+                $blogText = implode(' ',
+                                    $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
+            }
+
+
             $templateEntry = new ContainerExtensionTemplate();
             $templateEntry->set($templateCache->getCacheContent()['item']);
             $templateEntry->assign('title',
@@ -79,8 +92,9 @@ class ApplicationBlog_app extends Application_abstract
             $templateEntry->assign('date',
                                    $crudItemDate->format((string)Config::get('/environment/datetime/format')));
             $templateEntry->assign('content',
-                                   $crudItem->getCrudText());
+                                   $blogText);
             $templateEntry->parse();
+
 
             $entriesContent .= $templateEntry->get();
 
@@ -104,7 +118,8 @@ class ApplicationBlog_app extends Application_abstract
             $template->assign('menu',
                               $this->createMenu('/' . $dateName . '/' . $router->getParameter('year') . ' (' . $this->dateCollectCounterYear[$router->getParameter('year')] . ')',
                                                 $title));
-        } else {
+        }
+        else {
             $template->assign('menu',
                               $this->createMenu());
         }
@@ -121,7 +136,7 @@ class ApplicationBlog_app extends Application_abstract
     {
         $dateName     = ContainerFactoryLanguage::get('/ApplicationBlog/date');
         $categoryName = ContainerFactoryLanguage::get('/ApplicationBlog/category');
-
+        ContainerFactoryLanguage::get('/ApplicationBlog/category');
         $user = Container::getInstance('ContainerFactoryUser');
 
         $menuObj = new ContainerFactoryMenu();

@@ -14,5 +14,8 @@
         {$content}
     </div>
     <div class="card-container-footer">
+      <a hreflang="" class="btn" >{insert/language class="ApplicationBlog" path="/item/continueReading"
+        language-de_DE="Weiterlesen"
+          language-en_US="Continue reading"}</a>
     </div>
 </div>
