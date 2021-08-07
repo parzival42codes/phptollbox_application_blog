@@ -23,7 +23,7 @@ class ApplicationBlog_crud extends Base_abstract_crud
     protected ?int $crudId = null;
     /**
      * @var string
-     * @database type varchar;200
+     * @database type varchar;250
      */
     protected string $crudTitle = '';
     /**
@@ -36,7 +36,7 @@ class ApplicationBlog_crud extends Base_abstract_crud
      * @var int
      * @database type int;11
      */
-    protected int $crudView = 0;
+    protected int $crudViewCount = 0;
 
     /**
      * @return int|null
@@ -71,22 +71,6 @@ class ApplicationBlog_crud extends Base_abstract_crud
     }
 
     /**
-     * @return int
-     */
-    public function getCrudView(): int
-    {
-        return $this->crudView;
-    }
-
-    /**
-     * @param int $crudView
-     */
-    public function setCrudView(int $crudView): void
-    {
-        $this->crudView = $crudView;
-    }
-
-    /**
      * @return string
      */
     public function getCrudTitle(): string
@@ -100,6 +84,22 @@ class ApplicationBlog_crud extends Base_abstract_crud
     public function setCrudTitle(string $crudTitle): void
     {
         $this->crudTitle = $crudTitle;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCrudViewCount(): int
+    {
+        return $this->crudViewCount;
+    }
+
+    /**
+     * @param int $crudViewCount
+     */
+    public function setCrudViewCount(int $crudViewCount): void
+    {
+        $this->crudViewCount = $crudViewCount;
     }
 
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery

@@ -6,7 +6,9 @@
                 {$title}
             </div>
             <div style="flex: 1;text-align: right;">
-                {$date}
+                <div>{$date}</div>
+                <br />
+                <div>{$category}</div>
             </div>
         </div>
     </div>
@@ -14,7 +16,7 @@
         {$content}
     </div>
     <div class="card-container-footer">
-      <a hreflang="" class="btn" >{insert/language class="ApplicationBlog" path="/item/continueReading"
+      <a href="index.php?application=ApplicationBlogView&id={$id}&title={$titleUrl}" class="btn" >{insert/language class="ApplicationBlog" path="/item/continueReading"
         language-de_DE="Weiterlesen"
           language-en_US="Continue reading"}</a>
     </div>

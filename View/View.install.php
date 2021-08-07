@@ -8,4 +8,11 @@ class ApplicationBlogView_install extends ContainerFactoryModulInstall_abstract
         $this->importMetaFromModul('_app');
     }
 
+    public function activate(): void
+    {
+        $this->importRoute();
+        $this->importLanguage();
+        $this->readLanguageFromFile('default');
+    }
+
 }

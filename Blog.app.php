@@ -87,14 +87,19 @@ class ApplicationBlog_app extends Application_abstract
 
             $templateEntry = new ContainerExtensionTemplate();
             $templateEntry->set($templateCache->getCacheContent()['item']);
+            $templateEntry->assign('id',
+                                   $crudItem->getCrudId());
             $templateEntry->assign('title',
                                    $crudItem->getCrudTitle());
+            $templateEntry->assign('titleUrl',
+                                   urlencode($crudItem->getCrudTitle()));
             $templateEntry->assign('date',
                                    $crudItemDate->format((string)Config::get('/environment/datetime/format')));
+            $templateEntry->assign('category',
+                                   $crudItem->getAdditionalQuerySelect('custom_blog_category_crudPath') . '/' . $crudItem->getAdditionalQuerySelect('custom_blog_category_crudTitle'));
             $templateEntry->assign('content',
                                    $blogText);
             $templateEntry->parse();
-
 
             $entriesContent .= $templateEntry->get();
 
@@ -126,7 +131,6 @@ class ApplicationBlog_app extends Application_abstract
 
         $template->assign('entries',
                           $entriesContent);
-
 
         $template->parse();
         return $template->get();
