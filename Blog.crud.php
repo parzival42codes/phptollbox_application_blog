@@ -116,6 +116,12 @@ class ApplicationBlog_crud extends Base_abstract_crud
                      ],
                      'custom_blog_category_link.crudCategoryId = custom_blog_category.crudId');
 
+        $query->join('comment',
+                     [
+                         'crudContent',
+                     ],
+                     'comment.crudPath = custom_blog_category.crudPath');
+
         return $query;
     }
 

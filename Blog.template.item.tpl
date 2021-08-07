@@ -9,6 +9,7 @@
                 <div>{$date}</div>
                 <br />
                 <div>{$category}</div>
+                <div>{$viewCount}</div>
             </div>
         </div>
     </div>
