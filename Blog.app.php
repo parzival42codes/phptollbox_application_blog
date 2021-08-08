@@ -60,7 +60,7 @@ class ApplicationBlog_app extends Application_abstract
 
         $crudImports = $crud->find($filterCrud,
                                    [
-                                       'dataVariableCreated DESC'
+//                                       'dataVariableCreated DESC'
                                    ],
                                    [],
                                    $pagination->getPagesView(),
@@ -84,8 +84,6 @@ class ApplicationBlog_app extends Application_abstract
                                     $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
             }
 
-            $comment = new ContainerFactoryComment('/ApplicationBlog/view/' . $crudItem->getCrudId());
-
             $templateEntry = new ContainerExtensionTemplate();
             $templateEntry->set($templateCache->getCacheContent()['item']);
             $templateEntry->assign('id',
@@ -100,8 +98,8 @@ class ApplicationBlog_app extends Application_abstract
                                    $crudItem->getAdditionalQuerySelect('custom_blog_category_crudPath') . '/' . $crudItem->getAdditionalQuerySelect('custom_blog_category_crudTitle'));
             $templateEntry->assign('viewCount',
                                    $crudItem->getCrudViewCount());
-            $templateEntry->assign('viewComment',
-                                   $crudItem->getAdditionalQuerySelect('custom_blog_category_crudPath'));
+            $templateEntry->assign('commentCount',
+                                   $crudItem->getAdditionalQuerySelect('commentCount'));
             $templateEntry->assign('content',
                                    $blogText);
             $templateEntry->parse();
