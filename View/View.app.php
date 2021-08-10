@@ -51,10 +51,10 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
         $template->assign('commentCount',
                           $crud->getAdditionalQuerySelect('commentCount'));
 
-        d($category);
-
         $comment = new ContainerFactoryComment($category . '/' . $crud->getCrudId());
-        $comment->get();
+
+        $template->assign('comments',
+                          $comment->get());
 
         $template->parse();
         return $template->get();

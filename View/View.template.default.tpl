@@ -1,13 +1,15 @@
 <div class="flex-container"
      style="flex-direction: row;">
-    <div class="card-container card-container--shadow"
-         style="flex: 3;">
-        <div class="card-container-header">
-            {$title}
+    <div style="flex: 3;">
+        <div class="card-container card-container--shadow">
+            <div class="card-container-header">
+                {$title}
+            </div>
+            <div class="card-container-content">
+                {$content}
+            </div>
         </div>
-        <div class="card-container-content">
-            {$content}
-        </div>
+        {$comments}
     </div>
     <div style="flex: 1;">
         <div class="card-container card-container--shadow">
