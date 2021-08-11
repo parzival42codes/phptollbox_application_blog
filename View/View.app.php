@@ -68,7 +68,7 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
         /** @var ContainerIndexPage $page */
         $page = Container::getInstance('ContainerIndexPage');
 
-        $page->setPageTitle(ContainerFactoryLanguage::get('/' . $className . '/meta/title'));
+        $page->setPageTitle($title);
         $page->setPageDescription(ContainerFactoryLanguage::get('/' . $className . '/meta/description'));
 
         $breadcrumb = $page->getBreadcrumb();
