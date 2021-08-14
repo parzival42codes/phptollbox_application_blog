@@ -9,16 +9,7 @@
                 {$content}
             </div>
         </div>
-        <div class="card-container card-container--shadow">
-            <div class="card-container-content">
-                <h2>{insert/language class="ApplicationBlogView" path="/header/comment"
-                    language-de_DE="Kommentare"
-                    language-en_US="Comments"}</h2>
-            </div>
-        </div>
-        <div style="overflow-y: auto; height: 25em;">
-            {$comments}
-        </div>
+        {$comments}
     </div>
     <div style="flex: 1;">
         <div class="card-container card-container--shadow">
