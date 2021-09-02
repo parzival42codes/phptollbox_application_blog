@@ -52,15 +52,12 @@ class ApplicationBlog_app extends Application_abstract
 
         $count = $crud->count($filterCrud);
 
-        /** @var ContainerExtensionTemplateParseCreatePaginationHelper $pagination */
-        $pagination = Container::get('ContainerExtensionTemplateParseCreatePaginationHelper',
-                                     'blog',
-                                     $count);
+        $pagination = new ContainerExtensionTemplateParseCreatePaginationHelper('blog',
+                                                                                $count);
         $pagination->create();
 
         $crudImports = $crud->find($filterCrud,
-                                   [
-//                                       'dataVariableCreated DESC'
+                                   [//                                       'dataVariableCreated DESC'
                                    ],
                                    [],
                                    $pagination->getPagesView(),
