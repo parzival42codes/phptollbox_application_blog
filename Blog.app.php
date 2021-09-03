@@ -57,7 +57,8 @@ class ApplicationBlog_app extends Application_abstract
         $pagination->create();
 
         $crudImports = $crud->find($filterCrud,
-                                   [//                                       'dataVariableCreated DESC'
+                                   [
+                                       'dataVariableCreated DESC'
                                    ],
                                    [],
                                    $pagination->getPagesView(),

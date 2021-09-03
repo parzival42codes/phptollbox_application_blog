@@ -14,17 +14,17 @@ class ApplicationBlog_crud_category_link extends Base_abstract_crud
      */
     protected ?int $crudId = null;
     /**
-     * @var string
-     * @database type varchar;200
+     * @var int
+     * @database type int;11
      * @isIndex
      */
-    protected string $crudBlogId = '';
+    protected int $crudBlogId = 0;
     /**
-     * @var string
-     * @database type varchar;200
+     * @var int
+     * @database type int;11
      * @isIndex
      */
-    protected string $crudCategoryId= '';
+    protected int $crudCategoryId= 0;
 
     /**
      * @return int|null
@@ -43,33 +43,33 @@ class ApplicationBlog_crud_category_link extends Base_abstract_crud
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCrudBlogId(): string
+    public function getCrudBlogId(): int
     {
         return $this->crudBlogId;
     }
 
     /**
-     * @param string $crudBlogId
+     * @param int $crudBlogId
      */
-    public function setCrudBlogId(string $crudBlogId): void
+    public function setCrudBlogId(int $crudBlogId): void
     {
         $this->crudBlogId = $crudBlogId;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCrudCategoryId(): string
+    public function getCrudCategoryId(): int
     {
         return $this->crudCategoryId;
     }
 
     /**
-     * @param string $crudCategoryId
+     * @param int $crudCategoryId
      */
-    public function setCrudCategoryId(string $crudCategoryId): void
+    public function setCrudCategoryId(int $crudCategoryId): void
     {
         $this->crudCategoryId = $crudCategoryId;
     }
