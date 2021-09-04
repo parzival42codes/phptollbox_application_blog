@@ -83,7 +83,7 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
                                        $router->getUrlReadable());
 
         $menu = $this->getMenu();
-        $menu->setMenuClassMain($this->___getRootClass());
+        $menu->setMenuClassMain('ApplicationBlog');
 
     }
 

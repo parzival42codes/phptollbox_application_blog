@@ -22,6 +22,11 @@ class ApplicationBlog_crud extends Base_abstract_crud
      */
     protected ?int $crudId = null;
     /**
+     * @var ?int
+     * @database type int;11
+     */
+    protected ?int $crudUserId = null;
+    /**
      * @var string
      * @database type varchar;250
      */
@@ -100,6 +105,22 @@ class ApplicationBlog_crud extends Base_abstract_crud
     public function setCrudViewCount(int $crudViewCount): void
     {
         $this->crudViewCount = $crudViewCount;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCrudUserId(): ?int
+    {
+        return $this->crudUserId;
+    }
+
+    /**
+     * @param int|null $crudUserId
+     */
+    public function setCrudUserId(?int $crudUserId): void
+    {
+        $this->crudUserId = $crudUserId;
     }
 
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery
