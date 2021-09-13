@@ -43,6 +43,7 @@ description="Blog"
         return [
             'ApplicationBlog',
             'ApplicationBlogView',
+            'ApplicationBlogAdministration',
         ];
     }
 

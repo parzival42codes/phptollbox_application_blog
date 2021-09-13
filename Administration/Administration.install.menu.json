@@ -1,0 +1,16 @@
+{
+  "type": "install.menu",
+  "content": {
+    "link": "index.php?application=ApplicationBlogAdministration",
+    "menuClassMain": "ApplicationBlogAdministration",
+    "menuIcon": "",
+    "language": {
+      "de_DE": {
+        "menuTitle": "Übersicht",
+        "menuDescription": "",
+        "menuPath": "/Administration/Anwendungen/Blog",
+        "menuAccess": "ApplicationBlogAdministration"
+      }
+    }
+  }
+}

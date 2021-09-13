@@ -1,0 +1,8 @@
+{
+    "simple": {
+        "default": {
+            "path": "/administration/application/blog"
+        }
+    },
+    "regex": []
+}

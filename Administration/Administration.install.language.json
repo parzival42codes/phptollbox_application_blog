@@ -1,0 +1,13 @@
+{
+    "type": "install.language",
+    "content": {
+        "/breadcrumb": {
+            "de_DE": "Blog Übersicht",
+            "en_US": "Blog Overview"
+        }    ,
+        "/filter/header/crudCategoryPath": {
+            "de_DE": "Kategorie Pfad",
+            "en_US": "Category Path"
+        }
+    }
+}

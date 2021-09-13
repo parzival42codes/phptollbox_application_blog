@@ -22,7 +22,7 @@ class ApplicationBlog_app extends Application_abstract
     public function setContent(): string
     {
         $this->collectDateInfo();
-        $this->pageData();
+        $this->createPageData();
 
         $templateCache = new ContainerExtensionTemplateLoad_cache_template(Core::getRootClass(__CLASS__),
                                                                            'default,item');
@@ -190,25 +190,25 @@ class ApplicationBlog_app extends Application_abstract
 
     private function pageData(): void
     {
-        $className = Core::getRootClass(__CLASS__);
+//        $className = Core::getRootClass(__CLASS__);
+//
+//        /** @var ContainerIndexPage $page */
+//        $page = Container::getInstance('ContainerIndexPage');
+//
+//        $page->setPageTitle(ContainerFactoryLanguage::get('/' . $className . '/meta/title'));
+//        $page->setPageDescription(ContainerFactoryLanguage::get('/' . $className . '/meta/description'));
+//
+//        /** @var ContainerFactoryRouter $router */
+//        $router = Container::get('ContainerFactoryRouter');
+//        $router->analyzeUrl('index.php?application=' . $className . '');
+//
+//        $breadcrumb = $page->getBreadcrumb();
+//
+//        $breadcrumb->addBreadcrumbItem(ContainerFactoryLanguage::get('/' . $className . '/meta/title'),
+//                                       'index.php?application=' . $className);
 
-        /** @var ContainerIndexPage $page */
-        $page = Container::getInstance('ContainerIndexPage');
-
-        $page->setPageTitle(ContainerFactoryLanguage::get('/' . $className . '/meta/title'));
-        $page->setPageDescription(ContainerFactoryLanguage::get('/' . $className . '/meta/description'));
-
-        /** @var ContainerFactoryRouter $router */
-        $router = Container::get('ContainerFactoryRouter');
-        $router->analyzeUrl('index.php?application=' . $className . '');
-
-        $breadcrumb = $page->getBreadcrumb();
-
-        $breadcrumb->addBreadcrumbItem(ContainerFactoryLanguage::get('/' . $className . '/meta/title'),
-                                       'index.php?application=' . $className);
-
-        $menu = $this->getMenu();
-        $menu->setMenuClassMain($this->___getRootClass());
+//        $menu = $this->getMenu();
+//        $menu->setMenuClassMain($this->___getRootClass());
 
     }
 

@@ -142,11 +142,9 @@ class ApplicationBlog_crud extends Base_abstract_crud
                      'comments.crudPath = concat(custom_blog_category.crudPath,"/",custom_blog_category.crudTitle,"/",' . self::$table . '.crudId)');
 
         $query->selectFunction('count(comments.crudId) as commentCount');
-        $query->selectFunction('concat(custom_blog_category.crudPath,"/",custom_blog_category.crudTitle,"/",' . self::$table . '.crudId)');
+        $query->selectFunction('concat(custom_blog_category.crudPath,"/",custom_blog_category.crudTitle,"/",' . self::$table . '.crudId) as categoryPath');
 
         $query->groupBy(self::$table . '.crudId');
-
-        d($query->getQueryParsed());
 
         return $query;
     }
