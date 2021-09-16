@@ -39,28 +39,11 @@ class ApplicationBlogAdministration_app extends Application_abstract
 
         $filterValues = $filter->getFilterValues();
         $filterCrud   = [];
-        if (isset($filterValues['crudType']) && !empty($filterValues['crudType'])) {
-            $filterCrud['crudType'] = $filterValues['crudType'];
+        if (isset($filterValues['crudCategoryPath']) && !empty($filterValues['crudCategoryPath'])) {
+            $filterCrud['crudType'] = $filterValues['crudCategoryPath'];
         }
 
         $crud = new ApplicationBlog_crud();
-
-        $container = Container::DIC();
-        /** @var ContainerFactoryRouter $router */
-        $router = $container->getDIC('/Router');
-
-        $filterCrud = [];
-
-        if ($router->getRoute() === 'filtercategory') {
-            $filterCrud = [
-                'custom_blog_category_link.crudCategoryId' => $router->getParameter('category')
-            ];
-        }
-        elseif ($router->getRoute() === 'filterdate') {
-            $filterCrud = [
-                'dataVariableCreated' => $router->getParameter('year') . '-' . $router->getParameter('month') . '%',
-            ];
-        }
 
         $count = $crud->count($filterCrud);
 
@@ -76,8 +59,8 @@ class ApplicationBlogAdministration_app extends Application_abstract
                                   $pagination->getPagesView(),
                                   $pagination->getPageOffset());
 
-        d($crudResult);
-        eol();
+//        d($crudResult);
+//        eol();
 
         $this->createPageData();
 
@@ -92,10 +75,22 @@ class ApplicationBlogAdministration_app extends Application_abstract
             $editRouter->setParameter('id',
                                       $crudResultItem->getCrudId());
 
+            $blogText = $crudResultItem->getCrudText();
+
+            if (str_word_count($blogText) > (int)Config::get('/ApplicationBlog/words/max')) {
+                $blogTextExplode = explode(' ',
+                                           $blogText,
+                    ((int)Config::get('/ApplicationBlog/words/max') + 1));
+                array_pop($blogTextExplode);
+
+                $blogText = implode(' ',
+                                    $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
+            }
+
             $tableTcs[] = [
                 'crudId'              => $crudResultItem->getCrudId(),
                 'crudTitle'           => $crudResultItem->getCrudTitle(),
-                'crudText'            => $crudResultItem->getCrudText(),
+                'crudText'            => $blogText,
                 'categoryCategory'    => $crudResultItem->getAdditionalQuerySelect('categoryPath'),
                 'crudViewCount'       => $crudResultItem->getCrudViewCount(),
                 'commentCount'        => $crudResultItem->getAdditionalQuerySelect('commentCount'),
@@ -158,22 +153,17 @@ class ApplicationBlogAdministration_app extends Application_abstract
     protected function getFilterDataCategoryPath(): array
     {
 
-        $query = new ContainerFactoryDatabaseQuery(__METHOD__ . '#select',
-                                                   true,
-                                                   ContainerFactoryDatabaseQuery::MODE_SELECT);
-       $query->select('crudId');
-       $query->select('crudPath');
-       $query->select('crudTitle');
-        $query->setTable('custom_blog_category');
-
-        $query->construct();
-        $smtp = $query->execute();
-
-        while ($dbData = $smtp->fetch()) {
-            d($dbData);
-        }
+        $crud = new ApplicationBlog_crud_category();
+        $crudItems = $crud->find();
 
         $filterData = [];
+
+        /** @var ApplicationBlog_crud_category $crudItem */
+        foreach ($crudItems as $crudItem) {
+            $text        = ContainerFactoryLanguage::getLanguageText($crudItem->getCrudLanguage());
+            $filterData[$crudItem->getCrudId()] = $text;
+        }
+
         return $filterData;
     }
 

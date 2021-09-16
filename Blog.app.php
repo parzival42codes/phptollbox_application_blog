@@ -41,7 +41,7 @@ class ApplicationBlog_app extends Application_abstract
 
         if ($router->getRoute() === 'filtercategory') {
             $filterCrud = [
-                'custom_blog_category_link.crudCategoryId' => $router->getParameter('category')
+                'crudCategoryId' => $router->getParameter('category')
             ];
         }
         elseif ($router->getRoute() === 'filterdate') {
@@ -82,6 +82,8 @@ class ApplicationBlog_app extends Application_abstract
                                     $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
             }
 
+            $categoryText = ContainerFactoryLanguage::getLanguageText($crudItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage'));
+
             $templateEntry = new ContainerExtensionTemplate();
             $templateEntry->set($templateCache->getCacheContent()['item']);
             $templateEntry->assign('id',
@@ -93,7 +95,7 @@ class ApplicationBlog_app extends Application_abstract
             $templateEntry->assign('date',
                                    $crudItemDate->format((string)Config::get('/environment/datetime/format')));
             $templateEntry->assign('category',
-                                   $crudItem->getAdditionalQuerySelect('custom_blog_category_crudPath') . '/' . $crudItem->getAdditionalQuerySelect('custom_blog_category_crudTitle'));
+                                   $categoryText);
             $templateEntry->assign('viewCount',
                                    $crudItem->getCrudViewCount());
             $templateEntry->assign('commentCount',
@@ -109,9 +111,16 @@ class ApplicationBlog_app extends Application_abstract
         if ($router->getRoute() === 'filtercategory') {
             $categoryName = ContainerFactoryLanguage::get('/ApplicationBlog/category');
 
+            $text        = ContainerFactoryLanguage::getLanguageText($crudItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage'));
+            $textExplode = explode('/',
+                                   $text);
+            $title       = array_pop($textExplode);
+            $path        = implode('/',
+                                   $textExplode);
+
             $template->assign('menu',
-                              $this->createMenu('/' . $categoryName . '/' . $crudItem->getAdditionalQuerySelect('custom_blog_category_crudPath'),
-                                                $crudItem->getAdditionalQuerySelect('custom_blog_category_crudTitle')));
+                              $this->createMenu('/' . $categoryName . '/' . $path,
+                                                $title));
         }
         elseif ($router->getRoute() === 'filterdate') {
 
@@ -164,15 +173,20 @@ class ApplicationBlog_app extends Application_abstract
         }
 
         $crudCategory     = new ApplicationBlog_crud_category();
-        $crudCategoryFind = $crudCategory->find([
-                                                    'crudLanguage' => (string)Config::get('/environment/language')
-                                                ]);
+        $crudCategoryFind = $crudCategory->find();
 
         /** @var ApplicationBlog_crud_category $crudCategoryFindItem */
         foreach ($crudCategoryFind as $crudCategoryFindItem) {
+            $text        = ContainerFactoryLanguage::getLanguageText($crudCategoryFindItem->getCrudLanguage());
+            $textExplode = explode('/',
+                                   $text);
+            $title       = array_pop($textExplode);
+            $path        = implode('/',
+                                   $textExplode);
+
             $menuItem = new ContainerFactoryMenuItem();
-            $menuItem->setPath('/' . $categoryName . '/' . $crudCategoryFindItem->getCrudPath());
-            $menuItem->setTitle($crudCategoryFindItem->getCrudTitle());
+            $menuItem->setPath('/' . $categoryName . '/' . $path);
+            $menuItem->setTitle($title);
             $menuItem->setLink('index.php?application=ApplicationBlog&route=filtercategory&category=' . $crudCategoryFindItem->getCrudId());
             $menuItem->setAccess('ApplicationBlog');
 
@@ -246,5 +260,4 @@ class ApplicationBlog_app extends Application_abstract
 
         }
     }
-
 }

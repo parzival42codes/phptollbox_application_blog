@@ -36,7 +36,11 @@ class ApplicationBlog_crud extends Base_abstract_crud
      * @database type text
      */
     protected string $crudText = '';
-
+    /**
+     * @var int
+     * @database type int;11
+     */
+    protected int $crudCategoryId = 0;
     /**
      * @var int
      * @database type int;11
@@ -123,26 +127,35 @@ class ApplicationBlog_crud extends Base_abstract_crud
         $this->crudUserId = $crudUserId;
     }
 
+    /**
+     * @return int
+     */
+    public function getCrudCategoryId(): int
+    {
+        return $this->crudCategoryId;
+    }
+
+    /**
+     * @param int $crudCategoryId
+     */
+    public function setCrudCategoryId(int $crudCategoryId): void
+    {
+        $this->crudCategoryId = $crudCategoryId;
+    }
+
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery
     {
-        $query->join('custom_blog_category_link',
-                     [],
-                     'custom_blog_category_link.crudBlogId = ' . self::$table . '.crudId');
-
         $query->join('custom_blog_category',
                      [
-                         'crudPath',
-                         'crudTitle',
                          'crudLanguage',
                      ],
-                     'custom_blog_category_link.crudCategoryId = custom_blog_category.crudId');
+                     self::$table . '.crudCategoryId = custom_blog_category.crudId');
 
         $query->join('comments',
                      [],
-                     'comments.crudPath = concat(custom_blog_category.crudPath,"/",custom_blog_category.crudTitle,"/",' . self::$table . '.crudId)');
+                     'comments.crudPath = custom_blog_category.crudId');
 
         $query->selectFunction('count(comments.crudId) as commentCount');
-        $query->selectFunction('concat(custom_blog_category.crudPath,"/",custom_blog_category.crudTitle,"/",' . self::$table . '.crudId) as categoryPath');
 
         $query->groupBy(self::$table . '.crudId');
 

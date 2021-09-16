@@ -13,6 +13,11 @@
         language-de_DE="ID"
         language-en_US="ID"}"
         },
+        "crudStatus": {
+        "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/crudId"
+        language-de_DE="Status"
+        language-en_US="Status"}"
+        },
         "crudTitle": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/crudTitle"
         language-de_DE="Titel"
@@ -25,38 +30,33 @@
         },
         "categoryCategory": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/categoryCategory"
-        language-de_DE="Benutzer E-Mail Geprüft ?"
-        language-en_US="User E-Mail checked ?"}"
+        language-de_DE="Kategorie"
+        language-en_US="Category"}"
         },
         "crudViewCount": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/crudViewCount"
-        language-de_DE="E-Mail"
-        language-en_US="E-Mail"}"
+        language-de_DE="Anzahl Views"
+        language-en_US="Count View"}"
         },
         "commentCount": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/commentCount"
-        language-de_DE="User aktiviert ?"
-        language-en_US="Breadcrumb"}"
+        language-de_DE="Anzahl Kommentare"
+        language-en_US="Count Comment"}"
         },
         "dataVariableCreated": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/dataVariableCreated"
-        language-de_DE="User aktiviert ?"
-        language-en_US="Breadcrumb"}"
+        language-de_DE="Erstellt"
+        language-en_US="Created"}"
         },
         "dataVariableEdited": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/dataVariableEdited"
-        language-de_DE="User aktiviert ?"
-        language-en_US="Breadcrumb"}"
-        },
-        "dataVariableDeleted": {
-        "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/dataVariableDeleted"
-        language-de_DE="User aktiviert ?"
-        language-en_US="Breadcrumb"}"
+        language-de_DE="Bearbeitet"
+        language-en_US="Edit"}"
         },
         "action": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/action"
-        language-de_DE="Bearbeiten"
-        language-en_US="Edit"}"
+        language-de_DE=""
+        language-en_US=""}"
         }
         }
     </CMS>
