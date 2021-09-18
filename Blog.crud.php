@@ -22,6 +22,12 @@ class ApplicationBlog_crud extends Base_abstract_crud
      */
     protected ?int $crudId = null;
     /**
+     * @var string
+     * @database type enum;"draft","show","hide"
+     * @database default draft
+     */
+    protected string $crudStatus = 'draft';
+    /**
      * @var ?int
      * @database type int;11
      */
@@ -143,6 +149,22 @@ class ApplicationBlog_crud extends Base_abstract_crud
         $this->crudCategoryId = $crudCategoryId;
     }
 
+    /**
+     * @return string
+     */
+    public function getCrudStatus(): string
+    {
+        return $this->crudStatus;
+    }
+
+    /**
+     * @param string $crudStatus
+     */
+    public function setCrudStatus(string $crudStatus): void
+    {
+        $this->crudStatus = $crudStatus;
+    }
+
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery
     {
         $query->join('custom_blog_category',
@@ -153,7 +175,7 @@ class ApplicationBlog_crud extends Base_abstract_crud
 
         $query->join('comments',
                      [],
-                     'comments.crudPath = custom_blog_category.crudId');
+                     'comments.crudModul = "ApplicationBlog" AND comments.crudModulId = ' . self::$table . '.crudId');
 
         $query->selectFunction('count(comments.crudId) as commentCount');
 

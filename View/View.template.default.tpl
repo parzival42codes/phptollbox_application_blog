@@ -14,6 +14,16 @@
     <div style="flex: 1;">
         <div class="card-container card-container--shadow">
             <div class="card-container-header">
+                {insert/language class="ApplicationBlogView" path="/datetime"
+                language-de_DE="Erstellt"
+                language-en_US="Created"}
+            </div>
+            <div class="card-container-content">
+                {$datetime}
+            </div>
+        </div>
+        <div class="card-container card-container--shadow">
+            <div class="card-container-header">
                 {insert/language class="ApplicationBlogView" path="/category"
                 language-de_DE="Kategorie"
                 language-en_US="Category"}

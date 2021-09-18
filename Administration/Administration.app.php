@@ -89,15 +89,16 @@ class ApplicationBlogAdministration_app extends Application_abstract
 
             $tableTcs[] = [
                 'crudId'              => $crudResultItem->getCrudId(),
+                'crudStatus'          => ContainerFactoryLanguage::get('/ApplicationBlog/status/' . $crudResultItem->getCrudStatus()),
                 'crudTitle'           => $crudResultItem->getCrudTitle(),
                 'crudText'            => $blogText,
-                'categoryCategory'    => $crudResultItem->getAdditionalQuerySelect('categoryPath'),
+                'categoryCategory'    => ContainerFactoryLanguage::getLanguageText($crudResultItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage')),
                 'crudViewCount'       => $crudResultItem->getCrudViewCount(),
                 'commentCount'        => $crudResultItem->getAdditionalQuerySelect('commentCount'),
                 'dataVariableCreated' => $crudResultItem->getDataVariableCreated(),
                 'dataVariableEdited'  => $crudResultItem->getDataVariableEdited(),
                 'dataVariableDeleted' => $crudResultItem->getDataVariableDeleted(),
-                'edit'                => '',
+                'action'              => '',
                 //                'edit'            => '<a href="' . $editRouter->getUrlReadable() . '" class="btn">{insert/resources resource="icon" icon="edit"}</a>',
             ];
         }
@@ -153,14 +154,14 @@ class ApplicationBlogAdministration_app extends Application_abstract
     protected function getFilterDataCategoryPath(): array
     {
 
-        $crud = new ApplicationBlog_crud_category();
+        $crud      = new ApplicationBlog_crud_category();
         $crudItems = $crud->find();
 
         $filterData = [];
 
         /** @var ApplicationBlog_crud_category $crudItem */
         foreach ($crudItems as $crudItem) {
-            $text        = ContainerFactoryLanguage::getLanguageText($crudItem->getCrudLanguage());
+            $text                               = ContainerFactoryLanguage::getLanguageText($crudItem->getCrudLanguage());
             $filterData[$crudItem->getCrudId()] = $text;
         }
 

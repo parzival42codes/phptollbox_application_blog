@@ -36,6 +36,18 @@
     "/form/dateTo/label": {
       "de_DE": "Datum bis",
       "en_US": "Date to"
+    },
+    "/status/show": {
+      "de_DE": "Angezeigt",
+      "en_US": "Show"
+    },
+    "/status/hide": {
+      "de_DE": "Versteckt",
+      "en_US": "Hide"
+    },
+    "/status/draft": {
+      "de_DE": "Entwurf",
+      "en_US": "Draft"
     }
   }
 }

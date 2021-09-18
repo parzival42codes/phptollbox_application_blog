@@ -42,16 +42,19 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
         $template->assign('content',
                           $crud->getCrudText());
 
-        $category = $crud->getAdditionalQuerySelect('custom_blog_category_crudPath') . '/' . $crud->getAdditionalQuerySelect('custom_blog_category_crudTitle');
+        $category = ContainerFactoryLanguage::getLanguageText($crud->getAdditionalQuerySelect('custom_blog_category_crudLanguage'));
 
+        $template->assign('datetime',
+                          ContainerHelperDatetime::getLocaleDate($crud->getDataVariableCreated()));
         $template->assign('category',
-                          $crud->getAdditionalQuerySelect('custom_blog_category_crudPath') . '/' . $crud->getAdditionalQuerySelect('custom_blog_category_crudTitle'));
+                          $category);
         $template->assign('viewCount',
                           $crud->getCrudViewCount());
         $template->assign('commentCount',
                           $crud->getAdditionalQuerySelect('commentCount'));
 
-        $comment = new ContainerFactoryComment($category . '/' . $crud->getCrudId());
+        $comment = new ContainerFactoryComment('ApplicationBlog',
+                                               $crud->getCrudId());
 
         $template->assign('comments',
                           $comment->get());

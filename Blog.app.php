@@ -68,8 +68,6 @@ class ApplicationBlog_app extends Application_abstract
 
         /** @var ApplicationBlog_crud $crudItem */
         foreach ($crudImports as $crudItem) {
-            $crudItemDate = new DateTime($crudItem->getDataVariableCreated());
-
             $blogText = $crudItem->getCrudText();
 
             if (str_word_count($blogText) > (int)Config::get('/ApplicationBlog/words/max')) {
@@ -93,7 +91,7 @@ class ApplicationBlog_app extends Application_abstract
             $templateEntry->assign('titleUrl',
                                    urlencode($crudItem->getCrudTitle()));
             $templateEntry->assign('date',
-                                   $crudItemDate->format((string)Config::get('/environment/datetime/format')));
+                                   ContainerHelperDatetime::getLocaleDate($crudItem->getDataVariableCreated()));
             $templateEntry->assign('category',
                                    $categoryText);
             $templateEntry->assign('viewCount',
