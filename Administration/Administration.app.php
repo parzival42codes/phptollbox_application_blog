@@ -95,9 +95,9 @@ class ApplicationBlogAdministration_app extends Application_abstract
                 'categoryCategory'    => ContainerFactoryLanguage::getLanguageText($crudResultItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage')),
                 'crudViewCount'       => $crudResultItem->getCrudViewCount(),
                 'commentCount'        => $crudResultItem->getAdditionalQuerySelect('commentCount'),
-                'dataVariableCreated' => $crudResultItem->getDataVariableCreated(),
-                'dataVariableEdited'  => $crudResultItem->getDataVariableEdited(),
-                'dataVariableDeleted' => $crudResultItem->getDataVariableDeleted(),
+                'dataVariableCreated' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableCreated()),
+                'dataVariableEdited' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableEdited()),
+                'dataVariableDeleted' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableDeleted()),
                 'action'              => '',
                 //                'edit'            => '<a href="' . $editRouter->getUrlReadable() . '" class="btn">{insert/resources resource="icon" icon="edit"}</a>',
             ];
