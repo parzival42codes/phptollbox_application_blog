@@ -7,6 +7,7 @@
  * @version  1.0.0
  * @modul    versionRequiredSystem 1.0.0
  * @modul    groupAccess 4
+ * @modul    hasCSS
  * @modul    language_path_de_DE /Administration/Anwendung
  * @modul    language_name_de_DE Blog Administration
  * @modul    language_path_en_US /Administration/Application
@@ -17,10 +18,10 @@ class ApplicationBlogAdministration_app extends Application_abstract
     public function setContent(): string
     {
         $templateCache = new ContainerExtensionTemplateLoad_cache_template(Core::getRootClass(__CLASS__),
-                                                                           'default');
+                                                                           'default,action');
 
         /** @var ContainerExtensionTemplate $template */
-        $template = Container::get('ContainerExtensionTemplate');
+        $template = new ContainerExtensionTemplate();
         $template->set($templateCache->getCacheContent()['default']);
 
         $filterDataCategoryPath = $this->getFilterDataCategoryPath();
@@ -87,6 +88,14 @@ class ApplicationBlogAdministration_app extends Application_abstract
                                     $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
             }
 
+            $templateAction = new ContainerExtensionTemplate();
+            $templateAction->set($templateCache->getCacheContent()['action']);
+
+            $templateAction->assign('id',
+                                    $crudResultItem->getCrudId());
+
+            $templateAction->parse();
+
             $tableTcs[] = [
                 'crudId'              => $crudResultItem->getCrudId(),
                 'crudStatus'          => ContainerFactoryLanguage::get('/ApplicationBlog/status/' . $crudResultItem->getCrudStatus()),
@@ -96,9 +105,9 @@ class ApplicationBlogAdministration_app extends Application_abstract
                 'crudViewCount'       => $crudResultItem->getCrudViewCount(),
                 'commentCount'        => $crudResultItem->getAdditionalQuerySelect('commentCount'),
                 'dataVariableCreated' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableCreated()),
-                'dataVariableEdited' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableEdited()),
+                'dataVariableEdited'  => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableEdited()),
                 'dataVariableDeleted' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableDeleted()),
-                'action'              => '',
+                'action'              => $templateAction->get(),
                 //                'edit'            => '<a href="' . $editRouter->getUrlReadable() . '" class="btn">{insert/resources resource="icon" icon="edit"}</a>',
             ];
         }

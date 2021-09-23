@@ -12,6 +12,7 @@ class ApplicationBlogAdministration_install extends ContainerFactoryModulInstall
         $this->importMenu();
         $this->importLanguage();
         $this->readLanguageFromFile('default');
+        $this->readLanguageFromFile('action');
     }
 
     public function uninstall(): void
