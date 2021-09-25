@@ -1,4 +1,2 @@
-<a href="/{$id}">{insert/function function="googlematerialicons" icon="edit" class="icon-big"}</a>
-{insert/function function="googlematerialicons" icon="toggle_on" class="icon-big"}
-{insert/function function="googlematerialicons" icon="toggle_off" class="icon-big"}
-{insert/function function="googlematerialicons" icon="delete" class="icon-big"}
+<a href="index.php?application=ApplicationBlogAdministrationEdit&route=edit&id={$id}" class="btn btnSmall">{insert/function function="googlematerialicons" icon="edit" class="icon-big"}</a>
+<span class="btn btnSmall">{insert/function function="googlematerialicons" icon="delete" class="icon-big"}</span>

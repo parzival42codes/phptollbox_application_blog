@@ -44,6 +44,7 @@ description="Blog"
             'ApplicationBlog',
             'ApplicationBlogView',
             'ApplicationBlogAdministration',
+            'ApplicationBlogAdministrationEdit',
         ];
     }
 

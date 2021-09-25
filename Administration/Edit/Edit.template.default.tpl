@@ -1,41 +1,56 @@
-<div class="flex-container">
-
-    <div class="card-container card-container--shadow flex-container-item" style="flex: 3;">
-        <div class="card-container-header">
-            {insert/language class="ApplicationUserEdit" path="/form/information/title"
-            language-de_DE="Regestrieren"
-            language-en_US="Registration"}
-        </div>
-        <div class="card-container-content">
-            <div
-                 style="flex: 3;">
-                {$registerHeader}
-                {$register}
-                {$registerPassword}
-                {$registerActivate}
-                {$registerFooter}
+<div class="flex-container"
+     style="flex-direction: row;">
+    <div style="flex: 3;">
+        <div class="card-container card-container--shadow">
+            <div class="card-container-header">
+                {$title}
+            </div>
+            <div class="card-container-content">
+                {$content}
             </div>
         </div>
     </div>
-    <div class="flex-container-item">
+    <div style="flex: 1;">
         <div class="card-container card-container--shadow">
             <div class="card-container-header">
-                {insert/language class="ApplicationUserEdit" path="/infoUserId"
-                language-de_DE="User ID"
-                language-en_US="User ID"}
+                {insert/language class="ApplicationBlogView" path="/datetime"
+                language-de_DE="Erstellt"
+                language-en_US="Created"}
             </div>
             <div class="card-container-content">
-                {$infoUserId}
+                {$datetime}
             </div>
-        </div>        <div class="card-container card-container--shadow">
+        </div>
+        <div class="card-container card-container--shadow">
             <div class="card-container-header">
-                {insert/language class="ApplicationUserEdit" path="/infoRegisterDate"
-                language-de_DE="Registrierungsdatum"
-                language-en_US="Register Date"}
+                {insert/language class="ApplicationBlogView" path="/category"
+                language-de_DE="Kategorie"
+                language-en_US="Category"}
             </div>
             <div class="card-container-content">
-                {$infoRegisterDate}
+                {$category}
+            </div>
+        </div>
+        <div class="card-container card-container--shadow">
+            <div class="card-container-header">
+                {insert/language class="ApplicationBlogView" path="/count/view"
+                language-de_DE="Aufrufe"
+                language-en_US="Views"}
+            </div>
+            <div class="card-container-content">
+                {$viewCount}
+            </div>
+        </div>
+        <div class="card-container card-container--shadow">
+            <div class="card-container-header">
+                {insert/language class="ApplicationBlogView" path="/count/commenats"
+                language-de_DE="Kommentare"
+                language-en_US="Comments"}
+            </div>
+            <div class="card-container-content">
+                {$commentCount}
             </div>
         </div>
     </div>
 </div>
+

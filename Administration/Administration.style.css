@@ -1,3 +1,7 @@
+.table-cell-type-body {
+    vertical-align: middle;
+}
+
 .table-cell-key-action {
     white-space: nowrap;
 }

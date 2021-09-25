@@ -13,7 +13,7 @@
         language-de_DE="ID"
         language-en_US="ID"}"
         },
-        "crudStatus": {
+        "status": {
         "titleHeader": "{insert/language class="ApplicationAdministrationUser" path="/table/crudStatus"
         language-de_DE="Status"
         language-en_US="Status"}"

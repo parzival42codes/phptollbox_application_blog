@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-class ApplicationAdministrationUserEdit_install extends ContainerFactoryModulInstall_abstract
+class ApplicationBlogAdministrationEdit_install extends ContainerFactoryModulInstall_abstract
 {
 
 

@@ -1,20 +1,19 @@
 <?php declare(strict_types=1);
 
 /**
- * Admin User Edit
- *
- * Admin User Edit
+ * Blog Verwaltung
  *
  * @author   Stefan Schlombs
  * @version  1.0.0
  * @modul    versionRequiredSystem 1.0.0
  * @modul    groupAccess 4
- * @modul    language_name_de_DE Benutzer bearbeiten
- * @modul    language_name_en_US User edit
- * @modul    language_path_de_DE /Administration/Benutzer
- * @modul    language_path_en_US /Administration/User
+ * @modul    hasCSS
+ * @modul    language_path_de_DE /Administration/Anwendung/Blog/Administration
+ * @modul    language_name_de_DE Edit
+ * @modul    language_path_en_US /Administration/Application/Blog/Administration
+ * @modul    language_name_en_US Edit
  */
-class ApplicationAdministrationUserEdit_app extends Application_abstract
+class ApplicationBlogAdministrationEdit_app extends Application_abstract
 {
 
     public function setContent(): string

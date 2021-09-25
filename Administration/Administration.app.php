@@ -18,7 +18,7 @@ class ApplicationBlogAdministration_app extends Application_abstract
     public function setContent(): string
     {
         $templateCache = new ContainerExtensionTemplateLoad_cache_template(Core::getRootClass(__CLASS__),
-                                                                           'default,action');
+                                                                           'default,status,action');
 
         /** @var ContainerExtensionTemplate $template */
         $template = new ContainerExtensionTemplate();
@@ -88,6 +88,14 @@ class ApplicationBlogAdministration_app extends Application_abstract
                                     $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
             }
 
+//            ContainerFactoryLanguage::get('/ApplicationBlog/status/' . $crudResultItem->getCrudStatus())
+
+            $templateStatus = new ContainerExtensionTemplate();
+            $templateStatus->set($templateCache->getCacheContent()['status']);
+            $templateStatus->assign('status',
+                                    $crudResultItem->getCrudStatus());
+            $templateStatus->parse();
+
             $templateAction = new ContainerExtensionTemplate();
             $templateAction->set($templateCache->getCacheContent()['action']);
 
@@ -98,7 +106,8 @@ class ApplicationBlogAdministration_app extends Application_abstract
 
             $tableTcs[] = [
                 'crudId'              => $crudResultItem->getCrudId(),
-                'crudStatus'          => ContainerFactoryLanguage::get('/ApplicationBlog/status/' . $crudResultItem->getCrudStatus()),
+                //                'crudStatus'          => ContainerFactoryLanguage::get('/ApplicationBlog/status/' . $crudResultItem->getCrudStatus()),
+                'status'              => $templateStatus->get(),
                 'crudTitle'           => $crudResultItem->getCrudTitle(),
                 'crudText'            => $blogText,
                 'categoryCategory'    => ContainerFactoryLanguage::getLanguageText($crudResultItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage')),
