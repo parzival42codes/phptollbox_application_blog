@@ -64,7 +64,7 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
 
     }
 
-    private function pageData($title): void
+    protected function pageData($title): void
     {
         $className = Core::getRootClass(__CLASS__);
 

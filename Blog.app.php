@@ -200,7 +200,7 @@ class ApplicationBlog_app extends Application_abstract
                                     $routerTitle);
     }
 
-    private function pageData(): void
+    protected function pageData(): void
     {
 //        $className = Core::getRootClass(__CLASS__);
 //

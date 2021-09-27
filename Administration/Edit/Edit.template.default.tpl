@@ -1,12 +1,14 @@
+{$registerHeader}
+
 <div class="flex-container"
      style="flex-direction: row;">
     <div style="flex: 3;">
         <div class="card-container card-container--shadow">
             <div class="card-container-header">
-                {$title}
+                {$crudTitle}
             </div>
             <div class="card-container-content">
-                {$content}
+                {$crudContent}
             </div>
         </div>
     </div>
@@ -19,16 +21,6 @@
             </div>
             <div class="card-container-content">
                 {$datetime}
-            </div>
-        </div>
-        <div class="card-container card-container--shadow">
-            <div class="card-container-header">
-                {insert/language class="ApplicationBlogView" path="/category"
-                language-de_DE="Kategorie"
-                language-en_US="Category"}
-            </div>
-            <div class="card-container-content">
-                {$category}
             </div>
         </div>
         <div class="card-container card-container--shadow">
@@ -54,3 +46,4 @@
     </div>
 </div>
 
+{$registerFooter}
