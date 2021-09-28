@@ -26,7 +26,7 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
 
         $container = Container::DIC();
         /** @var ContainerFactoryRouter $router */
-        $router = $container->getDIC('/Router');
+        $router = $container::get(ContainerFactoryRouter::class);
 
         $crud = new ApplicationBlog_crud();
         $crud->setCrudId((int)$router->getParameter('id'));
@@ -78,7 +78,7 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
 
         $container = Container::DIC();
         /** @var ContainerFactoryRouter $router */
-        $router = $container->getDIC('/Router');
+        $router = $container::get(ContainerFactoryRouter::class);
 
         $breadcrumb->addBreadcrumbItem(ContainerFactoryLanguage::get('/ApplicationBlog/breadcrumb'),
                                        'index.php?application=ApplicationBlog');

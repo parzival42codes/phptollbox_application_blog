@@ -33,9 +33,9 @@ class ApplicationBlog_app extends Application_abstract
 
         $crud = new ApplicationBlog_crud();
 
-        $container = Container::DIC();
+        $container = new Container();
         /** @var ContainerFactoryRouter $router */
-        $router = $container->getDIC('/Router');
+        $router = $container::get(ContainerFactoryRouter::class);
 
         $filterCrud = [];
 
