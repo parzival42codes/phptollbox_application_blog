@@ -22,6 +22,13 @@ class ApplicationBlog_crud extends Base_abstract_crud
      */
     protected ?int $crudId = null;
     /**
+     * @var ?int
+     * @database isNull
+     * @database isIndex
+     * @database type int;11
+     */
+    protected ?int $crudParentId = null;
+    /**
      * @var string
      * @database type enum;"draft","show","hide"
      * @database default draft
@@ -42,6 +49,11 @@ class ApplicationBlog_crud extends Base_abstract_crud
      * @database type text
      */
     protected string $crudText = '';
+    /**
+     * @var string
+     * @database type varchar;10
+     */
+    protected string $crudLanguage = '';
     /**
      * @var int
      * @database type int;11
@@ -163,6 +175,38 @@ class ApplicationBlog_crud extends Base_abstract_crud
     public function setCrudStatus(string $crudStatus): void
     {
         $this->crudStatus = $crudStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCrudLanguage(): string
+    {
+        return $this->crudLanguage;
+    }
+
+    /**
+     * @param string $crudLanguage
+     */
+    public function setCrudLanguage(string $crudLanguage): void
+    {
+        $this->crudLanguage = $crudLanguage;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCrudParentId(): ?int
+    {
+        return $this->crudParentId;
+    }
+
+    /**
+     * @param int|null $crudParentId
+     */
+    public function setCrudParentId(?int $crudParentId): void
+    {
+        $this->crudParentId = $crudParentId;
     }
 
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery

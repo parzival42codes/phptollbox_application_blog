@@ -25,10 +25,15 @@
                 language-en_US="Comments"}: {$commentCount}</div>
         </div>
     </div>
-    <div class="card-container-footer">
-        <a href="index.php?application=ApplicationBlogView&id={$id}&title={$titleUrl}"
-           class="btn">{insert/language class="ApplicationBlog" path="/item/continueReading"
-            language-de_DE="Weiterlesen"
-            language-en_US="Continue reading"}</a>
+    <div class="card-container-footer  flex-container">
+        <div style="flex: 1;text-align: left;">
+            <a href="index.php?application=ApplicationBlogView&id={$id}&title={$titleUrl}"
+               class="btn">{insert/language class="ApplicationBlog" path="/item/continueReading"
+                language-de_DE="Weiterlesen"
+                language-en_US="Continue reading"}</a>
+        </div>
+        <div style="flex: 1;text-align: right;">
+            {$crudLanguage}
+        </div>
     </div>
 </div>

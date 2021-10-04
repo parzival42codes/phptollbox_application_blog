@@ -88,6 +88,8 @@ class ApplicationBlog_app extends Application_abstract
                                    $crudItem->getCrudId());
             $templateEntry->assign('title',
                                    $crudItem->getCrudTitle());
+            $templateEntry->assign('crudLanguage',
+                                   $crudItem->getCrudLanguage());
             $templateEntry->assign('titleUrl',
                                    urlencode($crudItem->getCrudTitle()));
             $templateEntry->assign('date',
