@@ -21,23 +21,20 @@ class ApplicationBlogAdministrationEdit_app extends Application_abstract
         /** @var ContainerFactoryRouter $route */
         $route = Container::getInstance('ContainerFactoryRouter');
 
-        $crud =new ApplicationBlog_crud();
+        $crud = new ApplicationBlog_crud();
         if (!empty($route->getParameter('id'))) {
             $crud->setCrudId((int)$route->getParameter('id'));
             $crud->findById(true);
         }
 
-
-        $templateCache = new ContainerExtensionTemplateLoad_cache_template(
-                                        $this->___getRootClass(),
-                                        'default');
+        $templateCache = new ContainerExtensionTemplateLoad_cache_template($this->___getRootClass(),
+                                                                           'default');
 
         $template = new ContainerExtensionTemplate();
         $template->set($templateCache->getCacheContent()['default']);
 
-        $formHelper = new ContainerExtensionTemplateParseCreateForm_helper(
-                                     $this->___getRootClass(),
-                                     'edit');
+        $formHelper = new ContainerExtensionTemplateParseCreateForm_helper($this->___getRootClass(),
+                                                                           'edit');
 
         $formHelperResponse = $formHelper->getResponse();
         if (
@@ -46,6 +43,24 @@ class ApplicationBlogAdministrationEdit_app extends Application_abstract
             $this->formResponse($formHelper,
                                 $crud);
         }
+
+//        /** @var ContainerFactoryDatabaseQuery $query */
+//        $query = Container::get('ContainerFactoryDatabaseQuery',
+//                                __METHOD__ . '#select',
+//                                true,
+//                                ContainerFactoryDatabaseQuery::MODE_SELECT);
+//        $query->setTable('custom_blog');
+//        $query->select('crudId');
+//        $query->setParameterWhere('crudIdent',
+//                                  $this->id);
+//        $query->orderBy('dataVariableCreated DESC');
+//
+//        $query->construct();
+//        $smtp = $query->execute();
+//
+//        while ($smtpData = $smtp->fetch()) {
+//            $crudArray[$smtpData['crudId']] = $smtpData['dataVariableCreated'];
+//        }
 
         $formHelper->addFormElement('crudTitle',
                                     'text',
@@ -75,14 +90,39 @@ class ApplicationBlogAdministrationEdit_app extends Application_abstract
         $template->assign('crudContent',
                           $formHelper->getElements());
 
+        $formHelper->addFormElement('crudStatus',
+                                    'select',
+                                    [
+                                        [
+                                            'draft'  => ContainerFactoryLanguage::get('/ApplicationBlog/status/draft'),
+                                            'hide'   => ContainerFactoryLanguage::get('/ApplicationBlog/status/hide'),
+                                            'show'   => ContainerFactoryLanguage::get('/ApplicationBlog/status/show'),
+                                            'delete' => ContainerFactoryLanguage::get('/ApplicationBlog/status/delete'),
+                                        ]
+                                    ],
+                                    [
+                                        'ContainerExtensionTemplateParseCreateFormModifyValidatorRequired',
+                                        [
+                                            'ContainerExtensionTemplateParseCreateFormModifyDefault',
+                                            $crud->getCrudStatus()
+                                        ]
+                                    ]);
+
+        $template->assign('crudStatus',
+                          $formHelper->getElements());
+
         $template->assign('registerHeader',
                           $formHelper->getHeader());
 
         $template->assign('registerFooter',
                           $formHelper->getFooter());
 
-        $template->assign('datetime',
+        $template->assign('datetimeCreated',
                           ContainerHelperDatetime::getLocaleDate($crud->getDataVariableCreated()));
+        $template->assign('datetimeUpdated',
+                          ContainerHelperDatetime::getLocaleDate($crud->getDataVariableEdited()));
+        $template->assign('datetimeDeleted',
+                          ContainerHelperDatetime::getLocaleDate($crud->getDataVariableDeleted()));
         $template->assign('viewCount',
                           $crud->getCrudViewCount());
         $template->assign('commentCount',

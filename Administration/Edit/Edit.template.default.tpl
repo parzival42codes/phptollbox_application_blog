@@ -20,7 +20,7 @@
                 language-en_US="Status"}
             </div>
             <div class="card-container-content">
-                {$status}
+                {$crudStatus}
             </div>
         </div>
         <div class="card-container card-container--shadow">
@@ -31,16 +31,37 @@
             </div>
             <div class="card-container-content">
                 {$crudCategory}
+                <hr />
             </div>
         </div>
         <div class="card-container card-container--shadow">
             <div class="card-container-header">
-                {insert/language class="ApplicationBlogAdministrationEdit" path="/datetime"
+                {insert/language class="ApplicationBlogAdministrationEdit" path="/datetime/created"
                 language-de_DE="Erstellt"
                 language-en_US="Created"}
             </div>
             <div class="card-container-content">
-                {$datetime}
+                {$datetimeCreated}
+            </div>
+        </div>
+        <div class="card-container card-container--shadow">
+            <div class="card-container-header">
+                {insert/language class="ApplicationBlogAdministrationEdit" path="/datetime/update"
+                language-de_DE="Aktualisiert"
+                language-en_US="Updated"}
+            </div>
+            <div class="card-container-content">
+                {$datetimeUpdated}
+            </div>
+        </div>
+        <div class="card-container card-container--shadow">
+            <div class="card-container-header">
+                {insert/language class="ApplicationBlogAdministrationEdit" path="/datetime/deleted"
+                language-de_DE="Gelöscht"
+                language-en_US="Deleted"}
+            </div>
+            <div class="card-container-content">
+                {$datetimeDeleted}
             </div>
         </div>
         <div class="card-container card-container--shadow">

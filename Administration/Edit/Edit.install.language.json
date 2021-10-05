@@ -24,6 +24,10 @@
     "/form/crudPath/label": {
       "de_DE": "Benutzergruppe",
       "en_US": "Useergroup"
+    },
+    "/form/crudStatus/label": {
+      "de_DE": "Status",
+      "en_US": "Status"
     }
-    }
+  }
 }

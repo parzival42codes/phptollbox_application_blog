@@ -48,6 +48,10 @@
     "/status/draft": {
       "de_DE": "Entwurf",
       "en_US": "Draft"
+    },
+    "/status/delete": {
+      "de_DE": "Gelöscht",
+      "en_US": "Deleted"
     }
   }
 }
