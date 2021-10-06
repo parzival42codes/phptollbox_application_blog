@@ -55,10 +55,10 @@ class ApplicationBlog_crud extends Base_abstract_crud
      */
     protected string $crudLanguage = '';
     /**
-     * @var int
-     * @database type int;11
+     * @var string
+     * @database type varchar;250
      */
-    protected int $crudCategoryId = 0;
+    protected string $crudCategory = '';
     /**
      * @var int
      * @database type int;11
@@ -146,22 +146,6 @@ class ApplicationBlog_crud extends Base_abstract_crud
     }
 
     /**
-     * @return int
-     */
-    public function getCrudCategoryId(): int
-    {
-        return $this->crudCategoryId;
-    }
-
-    /**
-     * @param int $crudCategoryId
-     */
-    public function setCrudCategoryId(int $crudCategoryId): void
-    {
-        $this->crudCategoryId = $crudCategoryId;
-    }
-
-    /**
      * @return string
      */
     public function getCrudStatus(): string
@@ -194,29 +178,23 @@ class ApplicationBlog_crud extends Base_abstract_crud
     }
 
     /**
-     * @return int|null
+     * @return string
      */
-    public function getCrudParentId(): ?int
+    public function getCrudCategory(): string
     {
-        return $this->crudParentId;
+        return $this->crudCategory;
     }
 
     /**
-     * @param int|null $crudParentId
+     * @param string $crudCategory
      */
-    public function setCrudParentId(?int $crudParentId): void
+    public function setCrudCategory(string $crudCategory): void
     {
-        $this->crudParentId = $crudParentId;
+        $this->crudCategory = $crudCategory;
     }
 
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery
     {
-        $query->join('custom_blog_category',
-                     [
-                         'crudLanguage',
-                     ],
-                     self::$table . '.crudCategoryId = custom_blog_category.crudId');
-
         $query->join('comments',
                      [],
                      'comments.crudModul = "ApplicationBlog" AND comments.crudModulId = ' . self::$table . '.crudId');

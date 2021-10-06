@@ -41,7 +41,7 @@ class ApplicationBlog_app extends Application_abstract
 
         if ($router->getRoute() === 'filtercategory') {
             $filterCrud = [
-                'crudCategoryId' => $router->getParameter('category')
+                'crudCategory' => base64_decode($router->getParameter('category'))
             ];
         }
         elseif ($router->getRoute() === 'filterdate') {
@@ -111,7 +111,7 @@ class ApplicationBlog_app extends Application_abstract
         if ($router->getRoute() === 'filtercategory') {
             $categoryName = ContainerFactoryLanguage::get('/ApplicationBlog/category');
 
-            $text        = ContainerFactoryLanguage::getLanguageText($crudItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage'));
+            $text        = 'FooBar';
             $textExplode = explode('/',
                                    $text);
             $title       = array_pop($textExplode);

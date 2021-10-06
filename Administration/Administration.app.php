@@ -18,7 +18,7 @@ class ApplicationBlogAdministration_app extends Application_abstract
     public function setContent(): string
     {
         $templateCache = new ContainerExtensionTemplateLoad_cache_template(Core::getRootClass(__CLASS__),
-                                                                           'default,status,action');
+                                                                           'default,status,dates,action');
 
         /** @var ContainerExtensionTemplate $template */
         $template = new ContainerExtensionTemplate();
@@ -96,6 +96,14 @@ class ApplicationBlogAdministration_app extends Application_abstract
                                     $crudResultItem->getCrudStatus());
             $templateStatus->parse();
 
+            $templateDate = new ContainerExtensionTemplate();
+            $templateDate->set($templateCache->getCacheContent()['dates']);
+            $templateDate->assign('dataVariableCreated',
+                                  ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableCreated()));
+            $templateDate->assign('dataVariableEdited',
+                                  ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableEdited()));
+            $templateDate->parse();
+
             $templateAction = new ContainerExtensionTemplate();
             $templateAction->set($templateCache->getCacheContent()['action']);
 
@@ -110,9 +118,10 @@ class ApplicationBlogAdministration_app extends Application_abstract
                 'status'              => $templateStatus->get(),
                 'crudTitle'           => $crudResultItem->getCrudTitle(),
                 'crudText'            => $blogText,
-                'categoryCategory'    => ContainerFactoryLanguage::getLanguageText($crudResultItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage')),
+                'categoryCategory'    => $crudResultItem->getCrudCategory(),
                 'crudViewCount'       => $crudResultItem->getCrudViewCount(),
                 'commentCount'        => $crudResultItem->getAdditionalQuerySelect('commentCount'),
+                'dates'               => $templateDate->get(),
                 'dataVariableCreated' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableCreated()),
                 'dataVariableEdited'  => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableEdited()),
                 'dataVariableDeleted' => ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableDeleted()),
@@ -172,18 +181,19 @@ class ApplicationBlogAdministration_app extends Application_abstract
     protected function getFilterDataCategoryPath(): array
     {
 
-        $crud      = new ApplicationBlog_crud_category();
-        $crudItems = $crud->find();
-
-        $filterData = [];
-
-        /** @var ApplicationBlog_crud_category $crudItem */
-        foreach ($crudItems as $crudItem) {
-            $text                               = ContainerFactoryLanguage::getLanguageText($crudItem->getCrudLanguage());
-            $filterData[$crudItem->getCrudId()] = $text;
-        }
-
-        return $filterData;
+//        $crud      = new ApplicationBlog_crud_category();
+//        $crudItems = $crud->find();
+//
+//        $filterData = [];
+//
+//        /** @var ApplicationBlog_crud_category $crudItem */
+//        foreach ($crudItems as $crudItem) {
+//            $text                               = ContainerFactoryLanguage::getLanguageText($crudItem->getCrudLanguage());
+//            $filterData[$crudItem->getCrudId()] = $text;
+//        }
+//
+//        return $filterData;
+        return [];
     }
 
 }

@@ -56,15 +56,10 @@
                 language-de_DE="Anzahl Kommentare"
                 language-en_US="Count Comment"}"
                 },
-                "dataVariableCreated": {
-                "titleHeader": "{insert/language class="ApplicationBlogAdministration" path="/table/dataVariableCreated"
-                language-de_DE="Erstellt"
-                language-en_US="Created"}"
-                },
-                "dataVariableEdited": {
-                "titleHeader": "{insert/language class="ApplicationBlogAdministration" path="/table/dataVariableEdited"
-                language-de_DE="Bearbeitet"
-                language-en_US="Edit"}"
+                "dates": {
+                "titleHeader": "{insert/language class="ApplicationBlogAdministration" path="/table/dates"
+                language-de_DE="Datum"
+                language-en_US="Dates"}"
                 },
                 "action": {
                 "titleHeader": "{insert/language class="ApplicationBlogAdministration" path="/table/action"

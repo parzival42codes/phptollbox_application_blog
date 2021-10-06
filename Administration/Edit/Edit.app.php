@@ -111,6 +111,21 @@ class ApplicationBlogAdministrationEdit_app extends Application_abstract
         $template->assign('crudStatus',
                           $formHelper->getElements());
 
+        $formHelper->addFormElement('crudCategory',
+                                    'text',
+                                    [],
+                                    [
+                                        'ContainerExtensionTemplateParseCreateFormModifyValidatorRequired',
+                                        [
+                                            'ContainerExtensionTemplateParseCreateFormModifyDefault',
+                                            $crud->getCrudCategory()
+                                        ]
+                                    ]);
+
+        $template->assign('crudCategory',
+                          $formHelper->getElements());
+
+
         $template->assign('registerHeader',
                           $formHelper->getHeader());
 
