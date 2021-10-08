@@ -55,10 +55,10 @@ class ApplicationBlog_crud extends Base_abstract_crud
      */
     protected string $crudLanguage = '';
     /**
-     * @var string
-     * @database type varchar;250
+     * @var int
+     * @database type int;11
      */
-    protected string $crudCategory = '';
+    protected int $crudCategoryId = 0;
     /**
      * @var int
      * @database type int;11
@@ -178,19 +178,19 @@ class ApplicationBlog_crud extends Base_abstract_crud
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCrudCategory(): string
+    public function getCrudCategoryId(): int
     {
-        return $this->crudCategory;
+        return $this->crudCategoryId;
     }
 
     /**
-     * @param string $crudCategory
+     * @param int $crudCategoryId
      */
-    public function setCrudCategory(string $crudCategory): void
+    public function setCrudCategoryId(int $crudCategoryId): void
     {
-        $this->crudCategory = $crudCategory;
+        $this->crudCategoryId = $crudCategoryId;
     }
 
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery
@@ -198,6 +198,12 @@ class ApplicationBlog_crud extends Base_abstract_crud
         $query->join('comments',
                      [],
                      'comments.crudModul = "ApplicationBlog" AND comments.crudModulId = ' . self::$table . '.crudId');
+
+        $query->join('custom_blog_category',
+                     [
+                         'crudCategory'
+                     ],
+                     'custom_blog_category.crudId = ' . self::$table . '.crudCategoryId');
 
         $query->selectFunction('count(comments.crudId) as commentCount');
 

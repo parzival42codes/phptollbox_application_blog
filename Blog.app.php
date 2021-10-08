@@ -80,7 +80,8 @@ class ApplicationBlog_app extends Application_abstract
                                     $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
             }
 
-            $categoryText = ContainerFactoryLanguage::getLanguageText($crudItem->getAdditionalQuerySelect('custom_blog_category_crudLanguage'));
+            d($crudItem);
+            eol();
 
             $templateEntry = new ContainerExtensionTemplate();
             $templateEntry->set($templateCache->getCacheContent()['item']);
@@ -95,7 +96,7 @@ class ApplicationBlog_app extends Application_abstract
             $templateEntry->assign('date',
                                    ContainerHelperDatetime::getLocaleDate($crudItem->getDataVariableCreated()));
             $templateEntry->assign('category',
-                                   $categoryText);
+                                   $crudItem->getCrudCategoryId());
             $templateEntry->assign('viewCount',
                                    $crudItem->getCrudViewCount());
             $templateEntry->assign('commentCount',

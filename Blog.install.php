@@ -11,6 +11,7 @@ class ApplicationBlog_install extends ContainerFactoryModulInstall_abstract
         $this->importConfig();
         $this->importMetaFromModul('_app');
         $this->importQueryDatabaseFromCrud('ApplicationBlog_crud');
+        $this->importQueryDatabaseFromCrud('ApplicationBlog_crud_category');
         $this->readLanguageFromFile('item');
     }
 
