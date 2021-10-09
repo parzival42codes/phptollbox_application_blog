@@ -118,7 +118,7 @@ class ApplicationBlogAdministration_app extends Application_abstract
                 'status'              => $templateStatus->get(),
                 'crudTitle'           => $crudResultItem->getCrudTitle(),
                 'crudText'            => $blogText,
-                'categoryCategory'    => $crudResultItem->getCrudCategory(),
+                'categoryCategory'    => $crudResultItem->getAdditionalQuerySelect('custom_blog_category_crudCategory '),
                 'crudViewCount'       => $crudResultItem->getCrudViewCount(),
                 'commentCount'        => $crudResultItem->getAdditionalQuerySelect('commentCount'),
                 'dates'               => $templateDate->get(),
