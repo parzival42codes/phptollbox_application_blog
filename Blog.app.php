@@ -80,9 +80,6 @@ class ApplicationBlog_app extends Application_abstract
                                     $blogTextExplode) . ' ' . ContainerFactoryLanguage::get('/ApplicationBlog/ellipse');
             }
 
-            d($crudItem);
-            eol();
-
             $templateEntry = new ContainerExtensionTemplate();
             $templateEntry->set($templateCache->getCacheContent()['item']);
             $templateEntry->assign('id',
@@ -96,7 +93,7 @@ class ApplicationBlog_app extends Application_abstract
             $templateEntry->assign('date',
                                    ContainerHelperDatetime::getLocaleDate($crudItem->getDataVariableCreated()));
             $templateEntry->assign('category',
-                                   $crudItem->getCrudCategoryId());
+                                   $crudItem->getAdditionalQuerySelect('custom_blog_category_crudCategory'));
             $templateEntry->assign('viewCount',
                                    $crudItem->getCrudViewCount());
             $templateEntry->assign('commentCount',
@@ -178,7 +175,8 @@ class ApplicationBlog_app extends Application_abstract
 
         /** @var ApplicationBlog_crud_category $crudCategoryFindItem */
         foreach ($crudCategoryFind as $crudCategoryFindItem) {
-            $text        = ContainerFactoryLanguage::getLanguageText($crudCategoryFindItem->getCrudLanguage());
+            $text        = $crudCategoryFindItem->getCrudCategory();
+
             $textExplode = explode('/',
                                    $text);
             $title       = array_pop($textExplode);

@@ -95,6 +95,12 @@
                     language-de_DE="Unsichtbar"
                     language-en_US="Hide"}
                 </div>
+                <div class="flex-container-item">
+                    {insert/function function="googlematerialicons" icon="delete" class="icon-big"}
+                    {insert/language class="ApplicationBlogAdministration" path="/default/deleted"
+                    language-de_DE="Gelöscht"
+                    language-en_US="Deleted"}
+                </div>
             </div>
         </div>
     </div>

@@ -30,7 +30,7 @@ class ApplicationBlog_crud extends Base_abstract_crud
     protected ?int $crudParentId = null;
     /**
      * @var string
-     * @database type enum;"draft","show","hide"
+     * @database type enum;"draft","show","hide","deleted"
      * @database default draft
      */
     protected string $crudStatus = 'draft';

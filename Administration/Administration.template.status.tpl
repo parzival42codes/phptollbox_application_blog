@@ -19,3 +19,10 @@
 >
     {insert/function function="googlematerialicons" icon="visibility_off" class="icon-big"}
 </CMS>
+<CMS function="_ifthen"
+     ifthen="equal"
+     value="deleted"
+     assigned="status"
+>
+    {insert/function function="googlematerialicons" icon="delete" class="icon-big"}
+</CMS>
