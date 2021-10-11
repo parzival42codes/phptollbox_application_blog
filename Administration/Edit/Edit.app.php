@@ -8,6 +8,7 @@
  * @modul    versionRequiredSystem 1.0.0
  * @modul    groupAccess 4
  * @modul    hasCSS
+ * @modul    hasJavascript
  * @modul    language_path_de_DE /Administration/Anwendung/Blog/Administration
  * @modul    language_name_de_DE Edit
  * @modul    language_path_en_US /Administration/Application/Blog/Administration
@@ -43,24 +44,6 @@ class ApplicationBlogAdministrationEdit_app extends Application_abstract
             $this->formResponse($formHelper,
                                 $crud);
         }
-
-//        /** @var ContainerFactoryDatabaseQuery $query */
-//        $query = Container::get('ContainerFactoryDatabaseQuery',
-//                                __METHOD__ . '#select',
-//                                true,
-//                                ContainerFactoryDatabaseQuery::MODE_SELECT);
-//        $query->setTable('custom_blog');
-//        $query->select('crudId');
-//        $query->setParameterWhere('crudIdent',
-//                                  $this->id);
-//        $query->orderBy('dataVariableCreated DESC');
-//
-//        $query->construct();
-//        $smtp = $query->execute();
-//
-//        while ($smtpData = $smtp->fetch()) {
-//            $crudArray[$smtpData['crudId']] = $smtpData['dataVariableCreated'];
-//        }
 
         $formHelper->addFormElement('crudTitle',
                                     'text',
@@ -111,16 +94,35 @@ class ApplicationBlogAdministrationEdit_app extends Application_abstract
         $template->assign('crudStatus',
                           $formHelper->getElements());
 
+        $crudBlogCategory   = new ApplicationBlog_crud_category();
+        $crudBlogCategories = $crudBlogCategory->find([],
+                                                      [
+                                                          'crudCategory'
+                                                      ]);
+
+        $categoryIndex = [];
+
+        /** @var ApplicationBlog_crud_category $crudBlogCategoryItem */
+        foreach ($crudBlogCategories as $crudBlogCategoryItem) {
+            $categoryIndex[$crudBlogCategoryItem->getCrudId()] = $crudBlogCategoryItem->getCrudCategory();
+        }
+        $categoryIndex[0] = ContainerFactoryLanguage::get('/ApplicationBlogAdministrationEdit/form/category/new');
+
         $formHelper->addFormElement('crudCategory',
-                                    'text',
-                                    [],
+                                    'select',
+                                    [
+                                        $categoryIndex,
+                                    ],
                                     [
                                         'ContainerExtensionTemplateParseCreateFormModifyValidatorRequired',
                                         [
                                             'ContainerExtensionTemplateParseCreateFormModifyDefault',
-                                            $crud->getCrudCategory()
+                                            $crud->getCrudCategoryId()
                                         ]
                                     ]);
+
+        $formHelper->addFormElement('crudCategoryNew',
+                                    'text');
 
         $template->assign('crudCategory',
                           $formHelper->getElements());

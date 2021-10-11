@@ -28,6 +28,18 @@
     "/form/crudStatus/label": {
       "de_DE": "Status",
       "en_US": "Status"
+    },
+    "/form/crudCategory/label": {
+      "de_DE": "Kategorie",
+      "en_US": "Category"
+    },
+    "/form/crudCategoryNew/label": {
+      "de_DE": "Neue Kategorie",
+      "en_US": "New Category"
+    },
+    "/form/category/new": {
+      "de_DE": "Neue Kategorie",
+      "en_US": "New Category"
     }
   }
 }

@@ -193,6 +193,22 @@ class ApplicationBlog_crud extends Base_abstract_crud
         $this->crudCategoryId = $crudCategoryId;
     }
 
+    /**
+     * @return int|null
+     */
+    public function getCrudParentId(): ?int
+    {
+        return $this->crudParentId;
+    }
+
+    /**
+     * @param int|null $crudParentId
+     */
+    public function setCrudParentId(?int $crudParentId): void
+    {
+        $this->crudParentId = $crudParentId;
+    }
+
     protected function modifyFindQuery(ContainerFactoryDatabaseQuery $query): ContainerFactoryDatabaseQuery
     {
         $query->join('comments',
