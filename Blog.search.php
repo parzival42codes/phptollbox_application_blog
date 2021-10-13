@@ -9,7 +9,7 @@ class ApplicationBlog_search extends ApplicationSearch_abstract
 
         /** @var ContainerExtensionTemplate $template */
         $template = Container::get('ContainerExtensionTemplate');
-        $template->set($templateCache->getCacheContent()['search']);
+        $template->set($templateCache->get()['search']);
 
         $formHelper->addFormElement('dateFrom',
                                     'date',

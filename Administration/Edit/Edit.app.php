@@ -32,7 +32,7 @@ class ApplicationBlogAdministrationEdit_app extends Application_abstract
                                                                            'default');
 
         $template = new ContainerExtensionTemplate();
-        $template->set($templateCache->getCacheContent()['default']);
+        $template->set($templateCache->get()['default']);
 
         $formHelper = new ContainerExtensionTemplateParseCreateForm_helper($this->___getRootClass(),
                                                                            'edit');

@@ -22,7 +22,7 @@ class ApplicationBlogView_app extends ApplicationAdministration_abstract
 
         /** @var ContainerExtensionTemplate $template */
         $template = Container::get('ContainerExtensionTemplate');
-        $template->set($templateCache->getCacheContent()['default']);
+        $template->set($templateCache->get()['default']);
 
         $container = Container::DIC();
         /** @var ContainerFactoryRouter $router */

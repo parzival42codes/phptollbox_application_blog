@@ -22,7 +22,7 @@ class ApplicationBlogAdministration_app extends Application_abstract
 
         /** @var ContainerExtensionTemplate $template */
         $template = new ContainerExtensionTemplate();
-        $template->set($templateCache->getCacheContent()['default']);
+        $template->set($templateCache->get()['default']);
 
         $filterDataCategoryPath = $this->getFilterDataCategoryPath();
 
@@ -91,13 +91,13 @@ class ApplicationBlogAdministration_app extends Application_abstract
 //            ContainerFactoryLanguage::get('/ApplicationBlog/status/' . $crudResultItem->getCrudStatus())
 
             $templateStatus = new ContainerExtensionTemplate();
-            $templateStatus->set($templateCache->getCacheContent()['status']);
+            $templateStatus->set($templateCache->get()['status']);
             $templateStatus->assign('status',
                                     $crudResultItem->getCrudStatus());
             $templateStatus->parse();
 
             $templateDate = new ContainerExtensionTemplate();
-            $templateDate->set($templateCache->getCacheContent()['dates']);
+            $templateDate->set($templateCache->get()['dates']);
             $templateDate->assign('dataVariableCreated',
                                   ContainerHelperDatetime::getLocaleDate($crudResultItem->getDataVariableCreated()));
             $templateDate->assign('dataVariableEdited',
@@ -105,7 +105,7 @@ class ApplicationBlogAdministration_app extends Application_abstract
             $templateDate->parse();
 
             $templateAction = new ContainerExtensionTemplate();
-            $templateAction->set($templateCache->getCacheContent()['action']);
+            $templateAction->set($templateCache->get()['action']);
 
             $templateAction->assign('id',
                                     $crudResultItem->getCrudId());

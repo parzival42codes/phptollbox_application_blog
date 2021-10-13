@@ -29,7 +29,7 @@ class ApplicationBlog_app extends Application_abstract
 
         /** @var ContainerExtensionTemplate $template */
         $template = Container::get('ContainerExtensionTemplate');
-        $template->set($templateCache->getCacheContent()['default']);
+        $template->set($templateCache->get()['default']);
 
         $crud = new ApplicationBlog_crud();
 
@@ -81,7 +81,7 @@ class ApplicationBlog_app extends Application_abstract
             }
 
             $templateEntry = new ContainerExtensionTemplate();
-            $templateEntry->set($templateCache->getCacheContent()['item']);
+            $templateEntry->set($templateCache->get()['item']);
             $templateEntry->assign('id',
                                    $crudItem->getCrudId());
             $templateEntry->assign('title',
